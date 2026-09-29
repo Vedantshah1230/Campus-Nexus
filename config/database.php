@@ -1,29 +1,19 @@
 <?php
-// config/database.php - Campus Nexus Database Connection Configuration
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'campus_nexus');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_CHARSET', 'utf8mb4');
+$host = "localhost";
+$dbname = "campus_nexus";
+$username = "root";
+$password = "123456";
 
-function getDBConnection() {
-    static $pdo = null;
+$conn = new mysqli(
+    $host,
+    $username,
+    $password,
+    $dbname
+);
 
-    if ($pdo === null) {
-        $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
-        $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
-        ];
-
-        try {
-            $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-        } catch (PDOException $e) {
-            die("Database Connection Error: " . $e->getMessage());
-        }
-    }
-
-    return $pdo;
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
 }
+
+$conn->set_charset("utf8mb4");
