@@ -3,6 +3,7 @@
 session_start();
 
 require_once "../../config/database.php";
+require_once "../gamification/helpers.php";
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: ../auth/login.php");
@@ -104,6 +105,31 @@ $stmt->bind_param(
 );
 
 $stmt->execute();
+
+$updated = ($stmt->affected_rows === 1);
+
+$stmt->close();
+
+if ($updated && $action === "accepted") {
+
+    /*
+     * Badge ID 3 = Skill Sharer
+     */
+
+    $badgeAdded = awardBadge(
+        $conn,
+        $userId,
+        3
+    );
+
+    if ($badgeAdded) {
+        awardPoints(
+            $conn,
+            $userId,
+            40
+        );
+    }
+}
 
 $result = $stmt->get_result();
 

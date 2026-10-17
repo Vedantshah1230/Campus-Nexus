@@ -3,6 +3,8 @@
 session_start();
 
 require_once "../../config/database.php";
+require_once "../gamification/helpers.php";
+
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: ../auth/login.php");
@@ -58,6 +60,52 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         $stmt->close();
+    }
+}
+
+$sql = "INSERT INTO ideas
+            (user_id, title, description, category)
+        VALUES (?, ?, ?, ?)";
+
+$stmt = $conn->prepare($sql);
+
+$stmt->bind_param(
+    "isss",
+    $userId,
+    $title,
+    $description,
+    $category
+);
+
+if ($stmt->execute()) {
+    // Idea was created successfully.
+}
+/*
+|--------------------------------------------------------------------------
+| Check whether this is the user's first idea
+|--------------------------------------------------------------------------
+*/
+
+$sql = "SELECT COUNT(*) AS idea_count
+        FROM ideas
+        WHERE user_id = ?";
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+
+$stmt->close();
+
+if ((int) $row["idea_count"] === 1) {
+
+    // Badge ID 4 = Idea Contributor
+    $badgeAdded = awardBadge($conn, $userId, 4);
+
+    if ($badgeAdded) {
+        awardPoints($conn, $userId, 20);
     }
 }
 

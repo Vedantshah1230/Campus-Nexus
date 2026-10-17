@@ -3,6 +3,7 @@
 session_start();
 
 require_once "../../config/database.php";
+require_once "../gamification/helpers.php";
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: ../auth/login.php");
@@ -69,11 +70,55 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             | Update request
             */
 
-            $sql = "UPDATE project_members
-                    SET status = ?
-                    WHERE project_id = ?
-                      AND user_id = ?
-                      AND status = 'pending'";
+           if ($action === "accepted") {
+
+    $sql = "UPDATE project_members
+            SET status = 'accepted'
+            WHERE project_id = ?
+              AND user_id = ?
+              AND status = 'pending'";
+
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param(
+        "ii",
+        $projectId,
+        $memberId
+    );
+
+    $stmt->execute();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Only award the achievement if the request
+    | actually changed from pending → accepted.
+    |--------------------------------------------------------------------------
+    */
+
+    if ($stmt->affected_rows === 1) {
+
+        /*
+        | Badge ID 2 = Team Builder
+        */
+
+        $badgeAdded = awardBadge(
+            $conn,
+            $memberId,
+            2
+        );
+
+        if ($badgeAdded) {
+
+            awardPoints(
+                $conn,
+                $memberId,
+                30
+            );
+        }
+    }
+
+    $stmt->close();
+}
 
             $stmt = $conn->prepare($sql);
 

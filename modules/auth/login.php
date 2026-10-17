@@ -107,3 +107,67 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </body>
 
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Campus Nexus</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-card">
+
+        <a class="auth-brand" href="../../public/index.php">
+            Campus Nexus
+        </a>
+
+        <h1>Welcome back</h1>
+
+        <p class="auth-subtitle">
+            Sign in to connect, collaborate, and create.
+        </p>
+
+        <?php if ($message !== ""): ?>
+            <p class="form-message" role="alert">
+                <?= htmlspecialchars($message) ?>
+            </p>
+        <?php endif; ?>
+
+        <form method="POST" action="">
+
+            <label for="email">Email address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                autocomplete="email"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                autocomplete="current-password"
+                required
+            >
+
+            <button type="submit">Sign In</button>
+
+        </form>
+
+        <p class="auth-footer">
+            Don't have an account?
+            <a href="register.php">Create one</a>
+        </p>
+
+    </main>
+
+</body>
+</html>

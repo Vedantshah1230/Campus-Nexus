@@ -1,2 +1,366 @@
 /* Campus Nexus Master Stylesheet - Mirrored to assets/css/style.css */
 @import url('../../frontend/css/style.css');
+
+/* =====================================
+   Campus Nexus - Global Styles
+===================================== */
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --text: #172033;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --success: #15803d;
+    --radius: 14px;
+    --shadow: 0 4px 18px rgba(15, 23, 42, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3 {
+    line-height: 1.25;
+}
+
+h1 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+h2 {
+    font-size: 1.35rem;
+}
+
+p {
+    color: var(--muted);
+}
+
+a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button,
+.btn {
+    display: inline-block;
+    border: none;
+    border-radius: 9px;
+    padding: 10px 16px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+button:hover,
+.btn:hover {
+    background: var(--primary-dark);
+    color: white;
+    text-decoration: none;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: white;
+    color: var(--text);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: 2px solid #c7d2fe;
+    border-color: var(--primary);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+    margin-right: 8px;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+form {
+    margin-bottom: 24px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+th,
+td {
+    padding: 13px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: #eef2ff;
+    color: #312e81;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 24px 0;
+}
+
+/* Shared page layout */
+
+.container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+    padding: 32px 0;
+}
+
+.topbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner {
+    width: min(1100px, 92%);
+    margin: auto;
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.brand {
+    color: var(--text);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+/* Dashboard statistic cards */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.9rem;
+    font-weight: 800;
+    margin-top: 6px;
+}
+
+/* Module cards */
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+/* Status labels */
+
+.status {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: #e0e7ff;
+    color: #3730a3;
+    font-size: 0.85rem;
+}
+
+/* Mobile and tablet */
+
+@media (max-width: 800px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .container {
+        padding: 22px 0;
+    }
+
+    .topbar-inner {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .stats-grid,
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    th,
+    td {
+        padding: 9px;
+    }
+}
+
+/* =====================================
+   Authentication Pages
+===================================== */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background:
+        radial-gradient(ellipse at top left, #e0e7ff, transparent 55%),
+        var(--background);
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+    background: var(--surface);
+    padding: 36px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 16px 45px rgba(15, 23, 42, 0.09);
+}
+
+.auth-brand {
+    display: block;
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.auth-subtitle {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.auth-card h1 {
+    text-align: center;
+    font-size: 1.7rem;
+    margin-bottom: 8px;
+}
+
+.auth-card form {
+    margin-top: 24px;
+}
+
+.auth-card label {
+    margin-bottom: 7px;
+}
+
+.auth-card input {
+    margin-bottom: 18px;
+}
+
+.auth-card button {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.auth-footer {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 0.95rem;
+}
+
+.form-message {
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #eef2ff;
+    color: #3730a3;
+    margin: 16px 0;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 26px 20px;
+    }
+}

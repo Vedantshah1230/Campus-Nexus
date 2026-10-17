@@ -3,6 +3,7 @@
 session_start();
 
 require_once "../../config/database.php";
+require_once "../gamification/helpers.php";
 
 if (!isset($_SESSION["user_id"])) {
     header("Location: ../auth/login.php");
@@ -58,6 +59,53 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->execute();
 
             $projectId = $conn->insert_id;
+            /*
+|--------------------------------------------------------------------------
+| Check whether this is the user's first project
+|--------------------------------------------------------------------------
+*/
+
+$sql = "SELECT COUNT(*) AS project_count
+        FROM projects
+        WHERE creator_id = ?";
+
+$stmt = $conn->prepare($sql);
+
+$stmt->bind_param("i", $userId);
+
+$stmt->execute();
+
+$result = $stmt->get_result();
+
+$row = $result->fetch_assoc();
+
+$stmt->close();
+
+if ($row["project_count"] == 1) {
+
+    /*
+    | Badge ID 1 = First Project
+    */
+
+    $badgeAdded = awardBadge(
+        $conn,
+        $userId,
+        1
+    );
+
+    /*
+    | Only award the 50 points if the badge
+    | was actually added.
+    */
+
+    if ($badgeAdded) {
+        awardPoints(
+            $conn,
+            $userId,
+            50
+        );
+    }
+}
 
             $stmt->close();
 

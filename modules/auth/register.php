@@ -106,3 +106,75 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Campus Nexus</title>
+    <link rel="stylesheet" href="../../css/style.css">
+</head>
+
+<body class="auth-page">
+
+    <main class="auth-card">
+
+        <a class="auth-brand" href="../../public/index.php">
+            Campus Nexus
+        </a>
+
+        <h1>Create an account</h1>
+
+        <p class="auth-subtitle">
+            Join Campus Nexus and start connecting.
+        </p>
+
+        <?php if ($message !== ""): ?>
+            <p class="form-message" role="alert">
+                <?= htmlspecialchars($message) ?>
+            </p>
+        <?php endif; ?>
+
+        <form method="POST" action="">
+
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                value="<?= htmlspecialchars($_POST["name"] ?? "") ?>"
+                required
+            >
+
+            <label for="email">Email address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                required
+            >
+
+            <button type="submit">Create Account</button>
+
+        </form>
+
+        <p class="auth-footer">
+            Already have an account?
+            <a href="login.php">Sign in</a>
+        </p>
+
+    </main>
+
+</body>
+</html>
