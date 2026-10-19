@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once "../../config/database.php";
 
@@ -9,7 +11,7 @@ if (!isset($_SESSION["user_id"])) {
     exit;
 }
 
-$userId = $_SESSION["user_id"];
+$userId = (int) $_SESSION["user_id"];
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: exchange.php");
@@ -19,37 +21,32 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $exchangeId = (int) ($_POST["exchange_id"] ?? 0);
 
 if ($exchangeId <= 0) {
-    die("Invalid skill exchange.");
+    $_SESSION["flash_error"] = "Invalid skill exchange specified.";
+    header("Location: exchange.php");
+    exit;
 }
 
 /*
 |--------------------------------------------------------------------------
-| Get exchange
+| Get exchange details & verify open status
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT id, user_id
+$sql = "SELECT skill_exchanges.id, skill_exchanges.user_id, skills.name AS skill_name
         FROM skill_exchanges
-        WHERE id = ?
-          AND status = 'open'";
+        JOIN skills ON skill_exchanges.skill_id = skills.id
+        WHERE skill_exchanges.id = ?
+          AND skill_exchanges.status = 'open'";
 
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "i",
-    $exchangeId
-);
-
+$stmt->bind_param("i", $exchangeId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$exchange = $result->fetch_assoc();
-
+$exchange = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$exchange) {
-    die("Skill exchange not found or closed.");
+    $_SESSION["flash_error"] = "Skill exchange offer not found or is currently closed.";
+    header("Location: exchange.php");
+    exit;
 }
 
 /*
@@ -57,9 +54,10 @@ if (!$exchange) {
 | Prevent requesting your own exchange
 |--------------------------------------------------------------------------
 */
-
 if ((int) $exchange["user_id"] === $userId) {
-    die("You cannot request your own skill exchange.");
+    $_SESSION["flash_warning"] = "You cannot request assistance from your own skill exchange listing.";
+    header("Location: exchange.php");
+    exit;
 }
 
 /*
@@ -67,30 +65,17 @@ if ((int) $exchange["user_id"] === $userId) {
 | Check duplicate request
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT id
-        FROM skill_exchange_requests
-        WHERE exchange_id = ?
-          AND requester_id = ?";
-
+$sql = "SELECT id, status FROM skill_exchange_requests WHERE exchange_id = ? AND requester_id = ?";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "ii",
-    $exchangeId,
-    $userId
-);
-
+$stmt->bind_param("ii", $exchangeId, $userId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$existingRequest = $result->fetch_assoc();
-
+$existingRequest = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if ($existingRequest) {
-    die("You have already requested this skill exchange.");
+    $_SESSION["flash_warning"] = "You have already sent a request for this skill (Status: " . ucfirst($existingRequest["status"]) . ").";
+    header("Location: requests.php");
+    exit;
 }
 
 /*
@@ -98,59 +83,22 @@ if ($existingRequest) {
 | Create request
 |--------------------------------------------------------------------------
 */
+$requestMessage = trim($_POST["message"] ?? "I would like to connect and learn this skill from you on Campus Nexus.");
 
-$message = "";
-
-$requestMessage =
-    "I would like to learn this skill from you.";
-
-$sql = "INSERT INTO skill_exchange_requests
-            (exchange_id, requester_id, message)
-        VALUES (?, ?, ?)";
+$sql = "INSERT INTO skill_exchange_requests (exchange_id, requester_id, message, status)
+        VALUES (?, ?, ?, 'pending')";
 
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "iis",
-    $exchangeId,
-    $userId,
-    $requestMessage
-);
+$stmt->bind_param("iis", $exchangeId, $userId, $requestMessage);
 
 if ($stmt->execute()) {
-
-    $message = "Request sent successfully.";
-
-} else {
-
-    $message = "Failed to send request.";
+    $stmt->close();
+    $_SESSION["flash_success"] = "Your request to learn " . htmlspecialchars($exchange["skill_name"]) . " has been sent to the student mentor.";
+    header("Location: requests.php");
+    exit;
 }
 
 $stmt->close();
-
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="UTF-8">
-
-    <title>Skill Exchange Request</title>
-
-</head>
-
-<body>
-
-    <h1>
-        <?= htmlspecialchars($message) ?>
-    </h1>
-
-    <a href="exchange.php">
-        Back to Skill Exchange
-    </a>
-
-</body>
-
-</html>
+$_SESSION["flash_error"] = "Unable to send exchange request. Please try again.";
+header("Location: exchange.php");
+exit;

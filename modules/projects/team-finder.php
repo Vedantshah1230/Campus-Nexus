@@ -22,6 +22,7 @@ $sql = "SELECT
             projects.title,
             projects.description,
             projects.created_at,
+            projects.creator_id,
             users.name AS creator
         FROM projects
         JOIN users
@@ -125,99 +126,73 @@ foreach ($projects as &$project) {
 
 unset($project);
 
+$pageTitle = "Project Team Finder";
+$pageDescription = "Discover open student projects, check skill match scores, and request to join teams.";
+$breadcrumbs = [
+    ["label" => "Dashboard", "url" => "../../public/dashboard.php"],
+    ["label" => "Projects", "url" => "team-finder.php"],
+    ["label" => "Team Finder"]
+];
+
+require_once __DIR__ . "/../../includes/header.php";
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<main class="container">
 
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>Project Team Finder - Campus Nexus</title>
-
-</head>
-
-<body>
-
-    <h1>Project Team Finder</h1>
-
-    <p>
-        Find projects that match your skills.
-    </p>
-
-    <hr>
+    <div class="page-header">
+        <div>
+            <h1 class="page-header-title">Project Team Finder</h1>
+            <p class="page-header-subtitle">Find projects matching your skills and collaborate with students.</p>
+        </div>
+        <div class="page-header-actions">
+            <a class="btn btn-glow" href="create.php">+ Create Project</a>
+            <a class="btn btn-secondary" href="my-projects.php">My Projects</a>
+        </div>
+    </div>
 
     <?php if (empty($projects)): ?>
-
-        <p>
-            No open projects available.
-        </p>
-
+        <div class="card card-interactive">
+            <p>No open projects available at the moment.</p>
+        </div>
     <?php else: ?>
+        <div class="card-grid">
+            <?php foreach ($projects as $project): ?>
+                <article class="card card-interactive">
+                    <h3 style="margin-bottom: 8px;">
+                        <?= htmlspecialchars($project["title"]) ?>
+                    </h3>
 
-        <?php foreach ($projects as $project): ?>
+                    <p style="margin-bottom: 12px;">
+                        <?= htmlspecialchars($project["description"]) ?>
+                    </p>
 
-            <div>
+                    <p style="margin-bottom: 6px;">
+                        <strong>Created by:</strong> <?= htmlspecialchars($project["creator"]) ?>
+                    </p>
 
-                <h2>
-                    <?= htmlspecialchars($project["title"]) ?>
-                </h2>
+                    <p style="margin-bottom: 6px;">
+                        <strong>Compatibility:</strong>
+                        <span class="status"><?= $project["compatibility"] ?>% Match</span>
+                    </p>
 
-                <p>
-                    <?= htmlspecialchars($project["description"]) ?>
-                </p>
+                    <p style="margin-bottom: 16px;">
+                        Skills matched: <?= $project["matched_skills"] ?> / <?= $project["total_required"] ?>
+                    </p>
 
-                <p>
-                    <strong>Created by:</strong>
-                    <?= htmlspecialchars($project["creator"]) ?>
-                </p>
-
-                <p>
-                    <strong>Skill Compatibility:</strong>
-                    <?= $project["compatibility"] ?>%
-                </p>
-
-                <p>
-                    Matching skills:
-                    <?= $project["matched_skills"] ?>
-                    /
-                    <?= $project["total_required"] ?>
-                </p>
-<?php if ($project["creator"] !== $_SESSION["user_name"]): ?>
-
-    <form method="POST" action="join.php">
-
-        <input
-            type="hidden"
-            name="project_id"
-            value="<?= $project["id"] ?>"
-        >
-
-        <button type="submit">
-            Request to Join
-        </button>
-
-    </form>
-
-<?php endif; ?>
-                <hr>
-
-            </div>
-
-        <?php endforeach; ?>
-
+                    <?php if ((int) $project["creator_id"] !== (int) $userId): ?>
+                        <form method="POST" action="join.php" style="margin: 0;">
+                            <input type="hidden" name="project_id" value="<?= $project["id"] ?>">
+                            <button type="submit" class="btn">Request to Join</button>
+                        </form>
+                    <?php else: ?>
+                        <span class="status">Your Project</span>
+                    <?php endif; ?>
+                </article>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 
-    <a href="../../public/dashboard.php">
-        Back to Dashboard
-    </a>
+</main>
 
-</body>
-
-</html>
+<?php require_once __DIR__ . "/../../includes/footer.php"; ?>

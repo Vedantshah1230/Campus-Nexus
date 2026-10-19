@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once "../../config/database.php";
 
@@ -9,7 +11,7 @@ if (!isset($_SESSION["user_id"])) {
     exit;
 }
 
-$userId = $_SESSION["user_id"];
+$userId = (int) $_SESSION["user_id"];
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: index.php");
@@ -19,37 +21,27 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $ideaId = (int) ($_POST["idea_id"] ?? 0);
 
 if ($ideaId <= 0) {
-    die("Invalid idea.");
+    $_SESSION["flash_error"] = "Invalid idea specified.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
 |--------------------------------------------------------------------------
-| Check whether idea exists
+| Check whether idea exists and is active
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT id, user_id
-        FROM ideas
-        WHERE id = ?
-          AND status != 'archived'";
-
+$sql = "SELECT id, title, user_id FROM ideas WHERE id = ? AND status != 'archived'";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "i",
-    $ideaId
-);
-
+$stmt->bind_param("i", $ideaId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$idea = $result->fetch_assoc();
-
+$idea = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$idea) {
-    die("Idea not found.");
+    $_SESSION["flash_error"] = "This idea proposal could not be found or has been archived.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
@@ -57,9 +49,10 @@ if (!$idea) {
 | Prevent voting for your own idea
 |--------------------------------------------------------------------------
 */
-
 if ((int) $idea["user_id"] === $userId) {
-    die("You cannot vote for your own idea.");
+    $_SESSION["flash_warning"] = "You cannot vote for your own submitted idea.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
@@ -67,30 +60,17 @@ if ((int) $idea["user_id"] === $userId) {
 | Check whether user already voted
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT idea_id
-        FROM idea_votes
-        WHERE idea_id = ?
-          AND user_id = ?";
-
+$sql = "SELECT idea_id FROM idea_votes WHERE idea_id = ? AND user_id = ?";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "ii",
-    $ideaId,
-    $userId
-);
-
+$stmt->bind_param("ii", $ideaId, $userId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$existingVote = $result->fetch_assoc();
-
+$existingVote = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if ($existingVote) {
-    die("You have already voted for this idea.");
+    $_SESSION["flash_warning"] = "You have already cast your vote for '" . htmlspecialchars($idea["title"]) . "'.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
@@ -98,27 +78,18 @@ if ($existingVote) {
 | Add vote
 |--------------------------------------------------------------------------
 */
-
-$sql = "INSERT INTO idea_votes
-            (idea_id, user_id)
-        VALUES (?, ?)";
-
+$sql = "INSERT INTO idea_votes (idea_id, user_id) VALUES (?, ?)";
 $stmt = $conn->prepare($sql);
+$stmt->bind_param("ii", $ideaId, $userId);
 
-$stmt->bind_param(
-    "ii",
-    $ideaId,
-    $userId
-);
-
-if (!$stmt->execute()) {
-
+if ($stmt->execute()) {
     $stmt->close();
-
-    die("Failed to record vote.");
+    $_SESSION["flash_success"] = "Your upvote for '" . htmlspecialchars($idea["title"]) . "' has been recorded!";
+    header("Location: index.php");
+    exit;
 }
 
 $stmt->close();
-
+$_SESSION["flash_error"] = "Unable to record vote. Please try again.";
 header("Location: index.php");
 exit;

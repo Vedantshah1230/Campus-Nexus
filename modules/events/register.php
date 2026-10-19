@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once "../../config/database.php";
 require_once "../gamification/helpers.php";
@@ -10,7 +12,7 @@ if (!isset($_SESSION["user_id"])) {
     exit;
 }
 
-$userId = $_SESSION["user_id"];
+$userId = (int) $_SESSION["user_id"];
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: index.php");
@@ -20,7 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $eventId = (int) ($_POST["event_id"] ?? 0);
 
 if ($eventId <= 0) {
-    die("Invalid event.");
+    $_SESSION["flash_error"] = "Invalid event specified.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
@@ -28,36 +32,23 @@ if ($eventId <= 0) {
 | Get event information
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT
-            id,
-            creator_id,
-            max_participants,
-            status
-        FROM events
-        WHERE id = ?";
-
+$sql = "SELECT id, title, creator_id, max_participants, status, event_date FROM events WHERE id = ?";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "i",
-    $eventId
-);
-
+$stmt->bind_param("i", $eventId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$event = $result->fetch_assoc();
-
+$event = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$event) {
-    die("Event not found.");
+    $_SESSION["flash_error"] = "This event could not be found.";
+    header("Location: index.php");
+    exit;
 }
 
 if ($event["status"] === "cancelled") {
-    die("This event has been cancelled.");
+    $_SESSION["flash_error"] = "This event has been cancelled by the organizer.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
@@ -65,9 +56,10 @@ if ($event["status"] === "cancelled") {
 | Prevent creator from registering
 |--------------------------------------------------------------------------
 */
-
 if ((int) $event["creator_id"] === $userId) {
-    die("You created this event.");
+    $_SESSION["flash_warning"] = "You are the organizer of this event.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
@@ -75,128 +67,81 @@ if ((int) $event["creator_id"] === $userId) {
 | Check duplicate registration
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT event_id
-        FROM event_registrations
-        WHERE event_id = ?
-          AND user_id = ?";
-
+$sql = "SELECT event_id, status FROM event_registrations WHERE event_id = ? AND user_id = ?";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "ii",
-    $eventId,
-    $userId
-);
-
+$stmt->bind_param("ii", $eventId, $userId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$existingRegistration = $result->fetch_assoc();
-
+$existingRegistration = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
-if ($existingRegistration) {
-    die("You are already registered for this event.");
+if ($existingRegistration && $existingRegistration["status"] === "registered") {
+    $_SESSION["flash_warning"] = "You are already registered for '" . htmlspecialchars($event["title"]) . "'.";
+    header("Location: index.php");
+    exit;
 }
 
 /*
 |--------------------------------------------------------------------------
-| Count current registrations
+| Count current active registrations
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT COUNT(*) AS registered_count
-        FROM event_registrations
-        WHERE event_id = ?
-          AND status = 'registered'";
-
+$sql = "SELECT COUNT(*) AS registered_count FROM event_registrations WHERE event_id = ? AND status = 'registered'";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "i",
-    $eventId
-);
-
+$stmt->bind_param("i", $eventId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$data = $result->fetch_assoc();
-
-$registeredCount = (int) $data["registered_count"];
-
+$data = $stmt->get_result()->fetch_assoc();
+$registeredCount = (int) ($data["registered_count"] ?? 0);
 $stmt->close();
-
 
 /*
 |--------------------------------------------------------------------------
-| Check capacity
+| Check capacity limit
 |--------------------------------------------------------------------------
 */
-
-if (
-    $registeredCount >=
-    (int) $event["max_participants"]
-) {
-
-    die("Sorry, this event is full.");
+if ($registeredCount >= (int) $event["max_participants"]) {
+    $_SESSION["flash_warning"] = "Sorry, '" . htmlspecialchars($event["title"]) . "' has reached its maximum seat capacity.";
+    header("Location: index.php");
+    exit;
 }
 
-
 /*
 |--------------------------------------------------------------------------
-| Register student
+| Register student (Using ON DUPLICATE KEY UPDATE in case previously cancelled)
 |--------------------------------------------------------------------------
 */
-
-$sql = "INSERT INTO event_registrations
-            (event_id, user_id, status)
-        VALUES (?, ?, 'registered')";
-
-$stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "ii",
-    $eventId,
-    $userId
-);
-
-if (!$stmt->execute()) {
-
-   /*
-|--------------------------------------------------------------------------
-| Check whether this is the student's first registration
-|--------------------------------------------------------------------------
-*/
-
-$sql = "SELECT COUNT(*) AS registration_count
-        FROM event_registrations
-        WHERE user_id = ?
-          AND status = 'registered'";
+$sql = "INSERT INTO event_registrations (event_id, user_id, status)
+        VALUES (?, ?, 'registered')
+        ON DUPLICATE KEY UPDATE status = 'registered', created_at = CURRENT_TIMESTAMP";
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $userId);
-$stmt->execute();
+$stmt->bind_param("ii", $eventId, $userId);
 
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
+if ($stmt->execute()) {
+    $stmt->close();
 
-$stmt->close();
+    // Check whether this is the student's first event registration
+    $countSql = "SELECT COUNT(*) AS reg_count FROM event_registrations WHERE user_id = ? AND status = 'registered'";
+    $countStmt = $conn->prepare($countSql);
+    $countStmt->bind_param("i", $userId);
+    $countStmt->execute();
+    $countRow = $countStmt->get_result()->fetch_assoc();
+    $countStmt->close();
 
-if ((int) $row["registration_count"] === 1) {
-
-    // Badge ID 5 = Event Explorer
-    $badgeAdded = awardBadge($conn, $userId, 5);
-
-    if ($badgeAdded) {
-        awardPoints($conn, $userId, 20);
+    if ((int) $countRow["reg_count"] === 1) {
+        // Badge ID 5 = Event Explorer (20 points)
+        $badgeAdded = awardBadge($conn, $userId, 5);
+        if ($badgeAdded) {
+            awardPoints($conn, $userId, 20);
+        }
     }
-}
-}
 
-$stmt->close();
+    $_SESSION["flash_success"] = "Registration confirmed for '" . htmlspecialchars($event["title"]) . "'! We look forward to seeing you there.";
+    header("Location: index.php");
+    exit;
 
-header("Location: index.php");
-exit;
+} else {
+    $stmt->close();
+    $_SESSION["flash_error"] = "Failed to complete event registration. Please try again.";
+    header("Location: index.php");
+    exit;
+}

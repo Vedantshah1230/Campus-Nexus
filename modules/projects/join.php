@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once "../../config/database.php";
 
@@ -9,7 +11,7 @@ if (!isset($_SESSION["user_id"])) {
     exit;
 }
 
-$userId = $_SESSION["user_id"];
+$userId = (int) $_SESSION["user_id"];
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     header("Location: team-finder.php");
@@ -19,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 $projectId = (int) ($_POST["project_id"] ?? 0);
 
 if ($projectId <= 0) {
+    $_SESSION["flash_error"] = "Invalid project specified.";
     header("Location: team-finder.php");
     exit;
 }
@@ -28,29 +31,17 @@ if ($projectId <= 0) {
 | Check whether project exists and is open
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT id, creator_id
-        FROM projects
-        WHERE id = ?
-          AND status = 'open'";
-
+$sql = "SELECT id, title, creator_id FROM projects WHERE id = ? AND status = 'open'";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "i",
-    $projectId
-);
-
+$stmt->bind_param("i", $projectId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$project = $result->fetch_assoc();
-
+$project = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if (!$project) {
-    die("Project not found or no longer open.");
+    $_SESSION["flash_error"] = "This project could not be found or is no longer open for recruitment.";
+    header("Location: team-finder.php");
+    exit;
 }
 
 /*
@@ -58,9 +49,10 @@ if (!$project) {
 | Prevent creator from joining their own project
 |--------------------------------------------------------------------------
 */
-
 if ((int) $project["creator_id"] === $userId) {
-    die("You are already the creator of this project.");
+    $_SESSION["flash_warning"] = "You are already the owner of this project.";
+    header("Location: team-finder.php");
+    exit;
 }
 
 /*
@@ -68,35 +60,17 @@ if ((int) $project["creator_id"] === $userId) {
 | Check whether user already has a membership record
 |--------------------------------------------------------------------------
 */
-
-$sql = "SELECT status
-        FROM project_members
-        WHERE project_id = ?
-          AND user_id = ?";
-
+$sql = "SELECT status FROM project_members WHERE project_id = ? AND user_id = ?";
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "ii",
-    $projectId,
-    $userId
-);
-
+$stmt->bind_param("ii", $projectId, $userId);
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$existingMembership = $result->fetch_assoc();
-
+$existingMembership = $stmt->get_result()->fetch_assoc();
 $stmt->close();
 
 if ($existingMembership) {
-
-    die(
-        "You already have a request for this project. " .
-        "Current status: " .
-        htmlspecialchars($existingMembership["status"])
-    );
+    $_SESSION["flash_warning"] = "You already submitted a request for this project (Status: " . ucfirst($existingMembership["status"]) . ").";
+    header("Location: my-projects.php");
+    exit;
 }
 
 /*
@@ -104,28 +78,19 @@ if ($existingMembership) {
 | Create join request
 |--------------------------------------------------------------------------
 */
-
-$sql = "INSERT INTO project_members
-            (project_id, user_id, role, status)
+$sql = "INSERT INTO project_members (project_id, user_id, role, status)
         VALUES (?, ?, 'member', 'pending')";
-
 $stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "ii",
-    $projectId,
-    $userId
-);
+$stmt->bind_param("ii", $projectId, $userId);
 
 if ($stmt->execute()) {
-
     $stmt->close();
-
+    $_SESSION["flash_success"] = "Your request to join '" . htmlspecialchars($project["title"]) . "' has been sent to the team owner.";
     header("Location: my-projects.php");
     exit;
-
 }
 
 $stmt->close();
-
-die("Failed to send join request.");
+$_SESSION["flash_error"] = "Unable to submit join request. Please try again.";
+header("Location: team-finder.php");
+exit;

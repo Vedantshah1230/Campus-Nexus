@@ -1,24 +1,50 @@
-# Dependencies
-node_modules/
+# =====================================================================
+# Campus Nexus - Git Ignore Rules
+# =====================================================================
 
-# Environment files
+# Environment & Credentials
 .env
 .env.*
 !.env.example
 
-# Build output
+# Server & Application Logs
+*.log
+error_log
+php_errors.log
+access.log
+
+# Temporary / Scratch Test Files
+scratch/
+test_*.php
+tmp/
+temp/
+
+# OS-Specific Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# IDE & Editor Directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+nbproject/
+.buildpath
+.project
+.settings/
+
+# Composer & Node Dependencies (if added in future)
+/vendor/
+/node_modules/
 dist/
 build/
 coverage/
-
-# Python
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-
-# IDE and OS files
-.vscode/
-.idea/
-.DS_Store
-Thumbs.db

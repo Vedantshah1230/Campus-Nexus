@@ -1,6 +1,8 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once "../../config/database.php";
 
@@ -9,145 +11,154 @@ if (!isset($_SESSION["user_id"])) {
     exit;
 }
 
-$userId = $_SESSION["user_id"];
+$userId = (int) $_SESSION["user_id"];
+
+// CSRF token
+if (empty($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
 
 $message = "";
+$messageType = "info";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $department = trim($_POST["department"]);
-    $semester = (int) $_POST["semester"];
-    $bio = trim($_POST["bio"]);
-
-    if ($department === "" || $semester < 1 || $semester > 12) {
-
-        $message = "Please enter valid profile information.";
-
+    $submittedToken = $_POST["csrf_token"] ?? "";
+    if (!hash_equals($_SESSION["csrf_token"], $submittedToken)) {
+        $message = "Invalid security token. Please try again.";
+        $messageType = "error";
     } else {
 
-        $sql = "INSERT INTO student_profiles
-                    (user_id, department, semester, bio)
-                VALUES (?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE
-                    department = VALUES(department),
-                    semester = VALUES(semester),
-                    bio = VALUES(bio)";
+        $department = trim($_POST["department"] ?? "");
+        $semester = (int) ($_POST["semester"] ?? 1);
+        $bio = trim($_POST["bio"] ?? "");
 
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param(
-            "isis",
-            $userId,
-            $department,
-            $semester,
-            $bio
-        );
-
-        if ($stmt->execute()) {
-            $message = "Profile updated successfully.";
+        if ($department === "") {
+            $message = "Please enter your department or major.";
+            $messageType = "error";
+        } elseif ($semester < 1 || $semester > 12) {
+            $message = "Please select a valid semester between 1 and 12.";
+            $messageType = "error";
         } else {
-            $message = "Failed to update profile.";
-        }
 
-        $stmt->close();
+            $sql = "INSERT INTO student_profiles
+                        (user_id, department, semester, bio)
+                    VALUES (?, ?, ?, ?)
+                    ON DUPLICATE KEY UPDATE
+                        department = VALUES(department),
+                        semester = VALUES(semester),
+                        bio = VALUES(bio)";
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("isis", $userId, $department, $semester, $bio);
+
+            if ($stmt->execute()) {
+                $message = "Your student profile has been updated successfully.";
+                $messageType = "success";
+            } else {
+                $message = "Failed to update profile. Please try again.";
+                $messageType = "error";
+            }
+
+            $stmt->close();
+        }
     }
 }
 
-$sql = "SELECT department, semester, bio
-        FROM student_profiles
-        WHERE user_id = ?";
-
+// Fetch current values
+$sql = "SELECT department, semester, bio FROM student_profiles WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
-
 $stmt->bind_param("i", $userId);
-
 $stmt->execute();
-
-$result = $stmt->get_result();
-
-$profile = $result->fetch_assoc();
-
+$profile = $stmt->get_result()->fetch_assoc();
 $stmt->close();
+
+$pageTitle = "Edit Profile";
+$breadcrumbs = [
+    ["label" => "Dashboard", "url" => "../../public/dashboard.php"],
+    ["label" => "Profile", "url" => "profile.php"],
+    ["label" => "Edit Profile"]
+];
+
+require_once __DIR__ . "/../../includes/header.php";
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
+<main class="container">
 
-<head>
+    <div class="page-header">
+        <div>
+            <h1 class="page-header-title">Edit Profile</h1>
+            <p class="page-header-subtitle">Keep your academic background and personal bio up to date.</p>
+        </div>
+        <div class="page-header-actions">
+            <a class="btn btn-secondary" href="profile.php">Back to Profile</a>
+        </div>
+    </div>
 
-    <meta charset="UTF-8">
+    <div class="card card-interactive" style="max-width: 680px; margin: 0 auto; background: white; padding: 32px;">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+        <?php if ($message !== ""): ?>
+            <div class="alert alert-<?= $messageType === 'success' ? 'success' : 'error' ?>" role="alert" style="margin-bottom: 24px;">
+                <span class="alert-icon" aria-hidden="true"><?= $messageType === 'success' ? '✓' : '✕' ?></span>
+                <div class="alert-content"><?= htmlspecialchars($message) ?></div>
+            </div>
+        <?php endif; ?>
 
-    <title>Edit Profile - Campus Nexus</title>
+        <form method="POST" action="edit-profile.php">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
 
-</head>
+            <div style="margin-bottom: 20px;">
+                <label for="department" style="display: block; font-weight: 600; margin-bottom: 6px;">Department / Major</label>
+                <input
+                    type="text"
+                    id="department"
+                    name="department"
+                    value="<?= htmlspecialchars($profile["department"] ?? "") ?>"
+                    placeholder="e.g. Computer Science & Engineering"
+                    required
+                >
+            </div>
 
-<body>
+            <div style="margin-bottom: 20px;">
+                <label for="semester" style="display: block; font-weight: 600; margin-bottom: 6px;">Current Semester (1 - 12)</label>
+                <input
+                    type="number"
+                    id="semester"
+                    name="semester"
+                    min="1"
+                    max="12"
+                    value="<?= htmlspecialchars((string) ($profile["semester"] ?? "1")) ?>"
+                    required
+                >
+            </div>
 
-    <h1>Edit Profile</h1>
+            <div style="margin-bottom: 26px;">
+                <label for="bio" style="display: block; font-weight: 600; margin-bottom: 6px;">About You / Collaboration Bio</label>
+                <textarea
+                    id="bio"
+                    name="bio"
+                    rows="4"
+                    placeholder="Describe your technical interests, projects you want to build, and what you bring to a team..."
+                ><?= htmlspecialchars($profile["bio"] ?? "") ?></textarea>
+                <span style="font-size: 0.82rem; color: var(--muted); display: block; margin-top: 4px;">
+                    This description is shown to other students when browsing profiles or project join requests.
+                </span>
+            </div>
 
-    <?php if ($message !== ""): ?>
+            <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+                <button type="submit" class="btn btn-glow">
+                    Save Profile Changes
+                </button>
+                <a class="btn btn-secondary" href="profile.php">
+                    Cancel
+                </a>
+            </div>
 
-        <p>
-            <?= htmlspecialchars($message) ?>
-        </p>
+        </form>
 
-    <?php endif; ?>
+    </div>
 
-    <form method="POST">
+</main>
 
-        <label>Department</label>
-        <br>
-
-        <input
-            type="text"
-            name="department"
-            value="<?= htmlspecialchars($profile["department"] ?? "") ?>"
-            required
-        >
-
-        <br><br>
-
-        <label>Semester</label>
-        <br>
-
-        <input
-            type="number"
-            name="semester"
-            min="1"
-            max="12"
-            value="<?= htmlspecialchars($profile["semester"] ?? "") ?>"
-            required
-        >
-
-        <br><br>
-
-        <label>Bio</label>
-        <br>
-
-        <textarea
-            name="bio"
-            rows="5"
-            cols="40"
-        ><?= htmlspecialchars($profile["bio"] ?? "") ?></textarea>
-
-        <br><br>
-
-        <button type="submit">
-            Save Profile
-        </button>
-
-    </form>
-
-    <br>
-
-    <a href="profile.php">
-        View Profile
-    </a>
-
-</body>
-
-</html>
+<?php require_once __DIR__ . "/../../includes/footer.php"; ?>

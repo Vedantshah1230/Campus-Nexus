@@ -1,9 +1,13 @@
 <?php
 
-$host = "localhost";
-$dbname = "campus_nexus";
-$username = "root";
-$password = "123456";
+/**
+ * Campus Nexus - Active Database Connection
+ */
+
+$host     = getenv("DB_HOST") ?: "localhost";
+$dbname   = getenv("DB_NAME") ?: "campus_nexus";
+$username = getenv("DB_USER") ?: "root";
+$password = getenv("DB_PASS") !== false ? getenv("DB_PASS") : "123456";
 
 $conn = new mysqli(
     $host,

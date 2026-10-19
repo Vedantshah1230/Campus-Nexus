@@ -1,170 +1,148 @@
 <?php
 
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 require_once "../../config/database.php";
 
+// Prevent logged-in students from accessing login page again
+if (isset($_SESSION["user_id"])) {
+    header("Location: ../../public/dashboard.php");
+    exit;
+}
+
+// Generate CSRF token if not set
+if (empty($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+
 $message = "";
+$messageType = "error";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $email = trim($_POST["email"]);
-    $password = $_POST["password"];
-
-    if ($email === "" || $password === "") {
-        $message = "Email and password are required.";
+    // CSRF verification
+    $submittedToken = $_POST["csrf_token"] ?? "";
+    if (!hash_equals($_SESSION["csrf_token"], $submittedToken)) {
+        $message = "Invalid security session. Please refresh and try again.";
     } else {
 
-        $sql = "SELECT id, name, email, password, role
-                FROM users
-                WHERE email = ?";
+        $email = trim($_POST["email"] ?? "");
+        $password = $_POST["password"] ?? "";
 
-        $stmt = $conn->prepare($sql);
+        if ($email === "" || $password === "") {
+            $message = "Both email and password are required.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $message = "Invalid email or password.";
+        } else {
 
-        $stmt->bind_param("s", $email);
+            $sql = "SELECT id, name, email, password, role
+                    FROM users
+                    WHERE email = ?";
 
-        $stmt->execute();
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        $result = $stmt->get_result();
+            if ($result->num_rows === 1) {
+                $user = $result->fetch_assoc();
 
-        if ($result->num_rows === 1) {
+                if (password_verify($password, $user["password"])) {
+                    session_regenerate_id(true);
 
-            $user = $result->fetch_assoc();
+                    // Refresh CSRF token on login
+                    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
 
-            if (password_verify($password, $user["password"])) {
+                    $_SESSION["user_id"] = (int) $user["id"];
+                    $_SESSION["user_name"] = $user["name"];
+                    $_SESSION["user_email"] = $user["email"];
+                    $_SESSION["user_role"] = $user["role"];
 
-                session_regenerate_id(true);
-
-                $_SESSION["user_id"] = $user["id"];
-                $_SESSION["user_name"] = $user["name"];
-                $_SESSION["user_email"] = $user["email"];
-                $_SESSION["user_role"] = $user["role"];
-
-                header("Location: ../../public/dashboard.php");
-                exit;
-
+                    header("Location: ../../public/dashboard.php");
+                    exit;
+                } else {
+                    $message = "Invalid email or password.";
+                }
             } else {
                 $message = "Invalid email or password.";
             }
 
-        } else {
-            $message = "Invalid email or password.";
+            $stmt->close();
         }
-
-        $stmt->close();
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Campus Nexus - Login</title>
-</head>
-
-<body>
-
-    <h1>Campus Nexus Login</h1>
-
-    <?php if ($message !== ""): ?>
-        <p><?= htmlspecialchars($message) ?></p>
-    <?php endif; ?>
-
-    <form method="POST">
-
-        <label>Email</label>
-        <br>
-
-        <input
-            type="email"
-            name="email"
-            required
-        >
-
-        <br><br>
-
-        <label>Password</label>
-        <br>
-
-        <input
-            type="password"
-            name="password"
-            required
-        >
-
-        <br><br>
-
-        <button type="submit">
-            Login
-        </button>
-
-    </form>
-
-</body>
-
-</html>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Campus Nexus</title>
+    <title>Sign In | Campus Nexus</title>
+    <meta name="description" content="Sign in to your Campus Nexus student account.">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
+<body class="auth-page bg-grid-peach" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;">
 
-<body class="auth-page">
+    <main class="auth-card card-interactive animate-fade-up" style="width: 100%; max-width: 440px; background: white; padding: 36px 32px; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg);">
 
-    <main class="auth-card">
-
-        <a class="auth-brand" href="../../public/index.php">
-            Campus Nexus
-        </a>
-
-        <h1>Welcome back</h1>
-
-        <p class="auth-subtitle">
-            Sign in to connect, collaborate, and create.
-        </p>
+        <div style="text-align: center; margin-bottom: 24px;">
+            <a class="brand" href="../../public/index.php" style="justify-content: center; font-size: 1.5rem; margin-bottom: 12px;">
+                <span class="brand-icon" aria-hidden="true">✦</span>
+                <span class="brand-text">Campus <span class="brand-accent">Nexus</span></span>
+            </a>
+            <h1 class="font-display" style="font-size: 1.8rem; margin: 12px 0 6px; color: var(--text-primary);">Welcome Back</h1>
+            <p class="auth-subtitle" style="color: var(--muted); margin: 0; font-size: 0.95rem;">
+                Sign in to collaborate, share skills, and build projects.
+            </p>
+        </div>
 
         <?php if ($message !== ""): ?>
-            <p class="form-message" role="alert">
-                <?= htmlspecialchars($message) ?>
-            </p>
+            <div class="alert alert-error" role="alert" style="margin-bottom: 20px;">
+                <span class="alert-icon" aria-hidden="true">✕</span>
+                <div class="alert-content"><?= htmlspecialchars($message) ?></div>
+            </div>
         <?php endif; ?>
 
-        <form method="POST" action="">
+        <form method="POST" action="login.php" novalidate>
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
 
-            <label for="email">Email address</label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                autocomplete="email"
-                required
-            >
+            <div style="margin-bottom: 18px;">
+                <label for="email" style="display: block; font-weight: 600; font-size: 0.9rem; margin-bottom: 6px;">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value="<?= htmlspecialchars($_POST["email"] ?? "") ?>"
+                    autocomplete="email"
+                    placeholder="student@university.edu"
+                    required
+                >
+            </div>
 
-            <label for="password">Password</label>
-            <input
-                type="password"
-                id="password"
-                name="password"
-                autocomplete="current-password"
-                required
-            >
+            <div style="margin-bottom: 22px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label for="password" style="font-weight: 600; font-size: 0.9rem; margin: 0;">Password</label>
+                </div>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    autocomplete="current-password"
+                    placeholder="Enter your password"
+                    required
+                >
+            </div>
 
-            <button type="submit">Sign In</button>
-
+            <button type="submit" class="btn btn-glow" style="width: 100%; padding: 12px; font-size: 1rem;">
+                Sign In
+            </button>
         </form>
 
-        <p class="auth-footer">
-            Don't have an account?
-            <a href="register.php">Create one</a>
+        <p class="auth-footer" style="text-align: center; margin-top: 24px; color: var(--muted); font-size: 0.92rem;">
+            Don't have an account yet?
+            <a href="register.php" style="font-weight: 700; color: var(--primary);">Join Campus Nexus</a>
         </p>
 
     </main>
