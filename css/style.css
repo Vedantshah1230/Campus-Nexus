@@ -1504,7 +1504,484 @@ textarea:focus {
 }
 
 /* --------------------------------------------------------------------------
-   9. Accessibility & Prefers-Reduced-Motion
+   9. Brand Identity, Institutional Emblems & Command Palette
+   -------------------------------------------------------------------------- */
+.brand-logo-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: #070a13;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
+    border: 1px solid rgba(56, 189, 248, 0.4);
+    flex-shrink: 0;
+}
+
+.brand-logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.brand-info {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+}
+
+.brand-subtext {
+    font-size: 0.68rem;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+
+.topbar-affiliations {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 10px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+}
+
+.topbar-inst-logo {
+    height: 22px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 3px;
+}
+
+.inst-divider {
+    width: 1px;
+    height: 14px;
+    background: var(--border);
+}
+
+.quick-search-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: var(--surface-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.quick-search-trigger:hover {
+    background: white;
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.quick-search-kbd {
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    color: var(--text-secondary);
+}
+
+/* Command Palette Modal (Ctrl + K) */
+.cmd-palette-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(7, 10, 19, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 90px 20px 20px;
+}
+
+.cmd-palette-box {
+    width: min(620px, 100%);
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.cmd-palette-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    background: #fafbfc;
+}
+
+.cmd-palette-icon {
+    color: var(--primary);
+    flex-shrink: 0;
+}
+
+.cmd-palette-input {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.cmd-palette-kbd {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    padding: 3px 8px;
+    color: var(--muted);
+}
+
+.cmd-palette-results {
+    max-height: 380px;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+.cmd-group-label {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    padding: 6px 12px;
+}
+
+.cmd-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background var(--transition-fast);
+}
+
+.cmd-item:hover,
+.cmd-item.selected {
+    background: var(--surface-peach);
+    text-decoration: none;
+}
+
+.cmd-item-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.cmd-item-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cmd-item-text strong {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.cmd-item-text small {
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.cmd-item-badge {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    background: var(--surface-muted);
+    color: var(--muted);
+}
+
+.cmd-palette-footer {
+    padding: 10px 20px;
+    border-top: 1px solid var(--border);
+    background: #fafbfc;
+    font-size: 0.75rem;
+    color: var(--muted);
+}
+
+/* --------------------------------------------------------------------------
+   10. Hero Visual Enhancements, Mascot & Activity Ticker
+   -------------------------------------------------------------------------- */
+.cosmic-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-institution-banner {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 18px;
+    background: rgba(16, 25, 46, 0.75);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-full);
+    margin-bottom: 24px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-inst-img {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    background: white;
+    padding: 2px;
+}
+
+.hero-inst-text {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    letter-spacing: 0.02em;
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 48px;
+    align-items: center;
+    text-align: left;
+}
+
+@media (max-width: 960px) {
+    .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 36px;
+    }
+    .hero-actions {
+        justify-content: center !important;
+    }
+    .topbar-affiliations {
+        display: none !important;
+    }
+}
+
+.hero-mascot-card {
+    position: relative;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.25);
+    background: #0b1120;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+}
+
+.hero-mascot-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(56, 189, 248, 0.4);
+}
+
+.mascot-img-wrap {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    overflow: hidden;
+}
+
+.mascot-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease-out);
+}
+
+.hero-mascot-card:hover .mascot-img {
+    transform: scale(1.04);
+}
+
+.mascot-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    background: rgba(7, 10, 19, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--electric-blue);
+}
+
+/* Live Activity Ticker ("Nexus Pulse") */
+.nexus-pulse-bar {
+    background: var(--cosmic-900);
+    border-top: 1px solid rgba(56, 189, 248, 0.15);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.pulse-inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: min(1140px, 92%);
+    margin: 0 auto;
+}
+
+.pulse-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--electric-blue);
+    background: rgba(56, 189, 248, 0.12);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+}
+
+.pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    animation: pulseAtmosphere 1.5s infinite;
+}
+
+.ticker-viewport {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.ticker-track {
+    display: inline-flex;
+    gap: 36px;
+    animation: tickerScroll 28s linear infinite;
+}
+
+.ticker-item {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+@keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Interactive Skill Sandbox */
+.sandbox-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    padding: 30px;
+    box-shadow: var(--shadow-lg);
+}
+
+.sandbox-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0 24px;
+}
+
+.sandbox-chip {
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    border: 1.5px solid var(--border);
+    background: var(--surface-muted);
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+}
+
+.sandbox-chip:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.sandbox-chip.active {
+    background: var(--primary-light);
+    border-color: var(--primary);
+    color: var(--primary);
+    font-weight: 700;
+}
+
+/* Institutional Footer Strip */
+.footer-institution-strip {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.inst-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-sm);
+}
+
+.footer-inst-logo {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+    background: white;
+    padding: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   11. Accessibility & Prefers-Reduced-Motion
    -------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
     *,

@@ -8,8 +8,6 @@ if (session_status() === PHP_SESSION_NONE) {
 |--------------------------------------------------------------------------
 | Robust Dynamic Base URL Resolution
 |--------------------------------------------------------------------------
-| Accurately determines root URL path regardless of directory depth
-| (e.g., /public, /modules/projects, or local subfolder environments).
 */
 if (!isset($baseUrl)) {
     $scriptDir = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
@@ -27,7 +25,7 @@ $isNavActive = function (string $pattern) use ($currentScript): bool {
     return (bool) preg_match('~' . preg_quote($pattern, '~') . '~i', $currentScript);
 };
 
-// Flash messages (support both session flashes and page-level variables)
+// Flash messages
 $alertSuccess = $_SESSION['flash_success'] ?? $successMessage ?? null;
 $alertError = $_SESSION['flash_error'] ?? $errorMessage ?? null;
 $alertWarning = $_SESSION['flash_warning'] ?? $warningMessage ?? null;
@@ -41,9 +39,13 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?= htmlspecialchars($pageTitle) ?> | Campus Nexus</title>
-    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? 'Campus Nexus – Student Collaboration Hub connecting ideas, projects, skills, and events.') ?>">
+    <title><?= htmlspecialchars($pageTitle) ?> | Campus Nexus — ADIT & CVM University</title>
+    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? 'Campus Nexus – Student Collaboration Hub connecting ideas, projects, skills, and events at A D Patel Institute of Technology (ADIT), CVM University.') ?>">
 
+    <!-- Official Favicon -->
+    <link rel="icon" type="image/png" href="<?= htmlspecialchars($baseUrl) ?>/images/favicon.png">
+
+    <!-- Design System Stylesheet -->
     <link rel="stylesheet" href="<?= htmlspecialchars($baseUrl) ?>/css/style.css">
 </head>
 <body>
@@ -51,11 +53,32 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
 <header class="topbar">
     <div class="topbar-inner">
 
+        <!-- Brand Identity with Official Logo & Institutional Tag -->
         <a class="brand" href="<?= htmlspecialchars($baseUrl) ?>/public/index.php" aria-label="Campus Nexus Home">
-            <span class="brand-icon" aria-hidden="true">✦</span>
-            <span class="brand-text">Campus <span class="brand-accent">Nexus</span></span>
+            <div class="brand-logo-wrap">
+                <img src="<?= htmlspecialchars($baseUrl) ?>/images/cn-logo.png" alt="Campus Nexus Emblem" class="brand-logo-img">
+            </div>
+            <div class="brand-info">
+                <span class="brand-text">Campus <span class="brand-accent">Nexus</span></span>
+                <span class="brand-subtext">ADIT · CVM University</span>
+            </div>
         </a>
 
+        <!-- Institutional Trust Badges (ADIT & CVM University) -->
+        <div class="topbar-affiliations" title="A D Patel Institute of Technology (ADIT) · CVM University">
+            <img src="<?= htmlspecialchars($baseUrl) ?>/images/adit-logo.png" alt="ADIT - A D Patel Institute of Technology" class="topbar-inst-logo">
+            <span class="inst-divider" aria-hidden="true"></span>
+            <img src="<?= htmlspecialchars($baseUrl) ?>/images/cvm-university-logo.png" alt="CVM University" class="topbar-inst-logo">
+        </div>
+
+        <!-- Global Quick Search Trigger (Ctrl + K) -->
+        <button class="quick-search-trigger" id="openCommandPalette" type="button" aria-label="Open Quick Search" title="Quick Search (Ctrl + K)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <span class="quick-search-label">Quick Search...</span>
+            <kbd class="quick-search-kbd">Ctrl K</kbd>
+        </button>
+
+        <!-- Responsive Hamburger Toggle -->
         <button class="nav-toggle" id="navToggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="primaryNav">
             <span class="nav-toggle-line"></span>
             <span class="nav-toggle-line"></span>
@@ -136,6 +159,87 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
 
     </div>
 </header>
+
+<!-- Global Command Palette Modal (Ctrl + K) -->
+<div class="cmd-palette-backdrop" id="cmdPalette" role="dialog" aria-modal="true" aria-label="Global Quick Search" style="display: none;">
+    <div class="cmd-palette-box">
+        <div class="cmd-palette-input-wrap">
+            <svg class="cmd-palette-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="cmdPaletteInput" class="cmd-palette-input" placeholder="Type a command or search (e.g. projects, python, idea, event)..." autocomplete="off" spellcheck="false">
+            <kbd class="cmd-palette-kbd">ESC</kbd>
+        </div>
+        <div class="cmd-palette-results" id="cmdPaletteResults">
+            <div class="cmd-group-label">Quick Navigation</div>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/projects/team-finder.php" class="cmd-item">
+                <span class="cmd-item-icon">🚀</span>
+                <div class="cmd-item-text">
+                    <strong>Project Team Finder</strong>
+                    <small>Discover open student projects and check skill match</small>
+                </div>
+                <span class="cmd-item-badge">Projects</span>
+            </a>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/projects/create.php" class="cmd-item">
+                <span class="cmd-item-icon">➕</span>
+                <div class="cmd-item-text">
+                    <strong>Create New Project</strong>
+                    <small>Assemble a team and define required skills</small>
+                </div>
+                <span class="cmd-item-badge">Launch</span>
+            </a>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/skills/exchange.php" class="cmd-item">
+                <span class="cmd-item-icon">🤝</span>
+                <div class="cmd-item-text">
+                    <strong>Peer Skill Exchange</strong>
+                    <small>Offer mentorship or request help from student peers</small>
+                </div>
+                <span class="cmd-item-badge">Skills</span>
+            </a>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/ideas/index.php" class="cmd-item">
+                <span class="cmd-item-icon">💡</span>
+                <div class="cmd-item-text">
+                    <strong>Campus Idea Board</strong>
+                    <small>Vote on student innovation proposals and campus pitches</small>
+                </div>
+                <span class="cmd-item-badge">Ideas</span>
+            </a>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/events/index.php" class="cmd-item">
+                <span class="cmd-item-icon">📅</span>
+                <div class="cmd-item-text">
+                    <strong>Campus Events & Workshops</strong>
+                    <small>View upcoming workshops and reserve remaining seats</small>
+                </div>
+                <span class="cmd-item-badge">Events</span>
+            </a>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/gamification/leaderboard.php" class="cmd-item">
+                <span class="cmd-item-icon">🏆</span>
+                <div class="cmd-item-text">
+                    <strong>Campus Leaderboard & Podium</strong>
+                    <small>See top student contributors ranked by points</small>
+                </div>
+                <span class="cmd-item-badge">Rankings</span>
+            </a>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/gamification/badges.php" class="cmd-item">
+                <span class="cmd-item-icon">🏅</span>
+                <div class="cmd-item-text">
+                    <strong>Badges & Achievements</strong>
+                    <small>Track your unlocked and locked collaboration tokens</small>
+                </div>
+                <span class="cmd-item-badge">Badges</span>
+            </a>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/students/skills.php" class="cmd-item">
+                <span class="cmd-item-icon">⚡</span>
+                <div class="cmd-item-text">
+                    <strong>My Technical Skills</strong>
+                    <small>Update your proficiencies in Web, AI, Databases & Design</small>
+                </div>
+                <span class="cmd-item-badge">Profile</span>
+            </a>
+        </div>
+        <div class="cmd-palette-footer">
+            <span>Navigation: <kbd>↑</kbd> <kbd>↓</kbd> to navigate, <kbd>↵</kbd> to select, <kbd>ESC</kbd> to close</span>
+        </div>
+    </div>
+</div>
 
 <?php if (!empty($breadcrumbs) && is_array($breadcrumbs)): ?>
     <nav class="breadcrumbs-bar" aria-label="Breadcrumb">

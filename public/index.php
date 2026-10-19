@@ -1,7 +1,7 @@
 <?php
 
 $pageTitle = "Student Collaboration Hub";
-$pageDescription = "Connect with students, discover project teams with skill matching, barter skills, vote on ideas, and attend campus workshops.";
+$pageDescription = "Connect with students, discover project teams with skill matching, barter skills, vote on ideas, and attend campus workshops at ADIT, CVM University.";
 
 require_once __DIR__ . "/../includes/header.php";
 
@@ -10,75 +10,113 @@ require_once __DIR__ . "/../includes/header.php";
 <main>
 
     <!-- ====================================================================
-         SECTION 1: Cinematic Cosmic Hero with Abstract Planet Sphere
+         SECTION 1: Cinematic Cosmic Hero with Canvas & Mascot Showcase
          ==================================================================== -->
-    <section class="hero-cosmic" style="position: relative; overflow: hidden; padding: 110px 0 120px;">
-        <div class="cosmic-stars-layer" aria-hidden="true"></div>
+    <section class="hero-cosmic" style="position: relative; overflow: hidden; padding: 70px 0 90px;">
+        <!-- Interactive Celestial Starlight Canvas -->
+        <canvas id="cosmicCanvas" class="cosmic-canvas" aria-hidden="true"></canvas>
 
-        <!-- Ambient Atmospheric Planet Glow & Orbital Halo -->
-        <div style="position: absolute; top: -120px; right: -80px; width: 480px; height: 480px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, rgba(56, 189, 248, 0.28) 0%, rgba(99, 102, 241, 0.2) 45%, transparent 70%); filter: blur(35px); pointer-events: none;" aria-hidden="true"></div>
-        <div style="position: absolute; bottom: -80px; left: -60px; width: 380px; height: 380px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.22) 0%, transparent 65%); filter: blur(45px); pointer-events: none;" aria-hidden="true"></div>
+        <!-- Ambient Atmospheric Planet Glow & Halo -->
+        <div style="position: absolute; top: -140px; right: -100px; width: 520px; height: 520px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, rgba(56, 189, 248, 0.28) 0%, rgba(99, 102, 241, 0.2) 45%, transparent 70%); filter: blur(40px); pointer-events: none;" aria-hidden="true"></div>
+        <div style="position: absolute; bottom: -100px; left: -80px; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.22) 0%, transparent 65%); filter: blur(50px); pointer-events: none;" aria-hidden="true"></div>
 
-        <div class="container" style="position: relative; z-index: 2; text-align: center;">
+        <div class="container" style="position: relative; z-index: 2;">
 
-            <div class="animate-fade-up" style="margin-bottom: 20px;">
-                <span class="kicker-label kicker-cosmic">
-                    ✦ Next-Generation Student Collaboration
-                </span>
+            <!-- Institutional Accreditation Banner -->
+            <div style="text-align: center; margin-bottom: 28px;">
+                <div class="hero-institution-banner animate-fade-up">
+                    <img src="<?= htmlspecialchars($baseUrl) ?>/images/adit-logo.png" alt="ADIT Crest" class="hero-inst-img">
+                    <span class="hero-inst-text">A D Patel Institute of Technology · CVM University</span>
+                    <img src="<?= htmlspecialchars($baseUrl) ?>/images/cvm-university-logo.png" alt="CVM University Crest" class="hero-inst-img">
+                </div>
             </div>
 
-            <h1 class="font-display animate-fade-up" style="font-size: clamp(2.8rem, 6.5vw, 4.8rem); line-height: 1.1; margin: 0 auto 24px; max-width: 900px;">
-                Your Campus. <br>
-                Your Ideas. <span class="text-gradient-cosmic">Your Future.</span>
-            </h1>
+            <!-- 2-Column Hero Showcase Grid -->
+            <div class="hero-grid">
 
-            <p class="hero-description animate-fade-up" style="max-width: 720px; font-size: 1.15rem; margin: 0 auto 36px; color: var(--cosmic-text-muted); line-height: 1.7;">
-                Campus Nexus connects students across departments to discover cross-functional project teams,
-                exchange technical proficiencies, publish campus proposals, and register for workshops — all in one unified ecosystem.
-            </p>
+                <!-- Left Column: Copy & CTAs -->
+                <div class="hero-content">
+                    <div class="animate-fade-up" style="margin-bottom: 16px;">
+                        <span class="kicker-label kicker-cosmic">
+                            ✦ Official Campus Collaboration Hub
+                        </span>
+                    </div>
 
-            <div class="hero-actions animate-fade-up" style="display: flex; justify-content: center; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 50px;">
-                <?php if ($isLoggedIn): ?>
-                    <a class="btn btn-glow" style="padding: 13px 28px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/public/dashboard.php">
-                        Go to Your Dashboard
-                    </a>
-                    <a class="btn btn-cosmic-outline" style="padding: 13px 26px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/projects/team-finder.php">
-                        Browse Projects
-                    </a>
-                <?php else: ?>
-                    <a class="btn btn-glow" style="padding: 13px 30px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/auth/register.php">
-                        Start Collaborating
-                    </a>
-                    <a class="btn btn-cosmic-outline" style="padding: 13px 26px; font-size: 1rem;" href="#features">
-                        Explore Features
-                    </a>
-                <?php endif; ?>
-            </div>
+                    <h1 class="font-display animate-fade-up" style="font-size: clamp(2.4rem, 5.2vw, 4.2rem); line-height: 1.12; margin: 0 0 20px;">
+                        Your Campus. <br>
+                        Your Ideas. <span class="text-gradient-cosmic">Your Future.</span>
+                    </h1>
 
-            <!-- Floating Collaborative Showcase Cards -->
-            <div style="display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; max-width: 860px; margin: 0 auto;" class="reveal-on-scroll">
+                    <p class="hero-description animate-fade-up" style="font-size: 1.1rem; margin: 0 0 32px; color: var(--cosmic-text-muted); line-height: 1.7;">
+                        Connect across departments at ADIT to discover cross-functional hackathon teams,
+                        exchange peer skills, pitch campus initiatives, and attend workshops — all in one unified, gamified ecosystem.
+                    </p>
 
-                <div class="card-cosmic animate-float" style="padding: 14px 20px; border-radius: var(--radius-md); text-align: left; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-cosmic);">
-                    <span style="font-size: 1.8rem;">🚀</span>
-                    <div>
-                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--cosmic-text-high);">AI Study Assistant</div>
-                        <div style="font-size: 0.8rem; color: var(--electric-blue);">90% Skill Compatibility</div>
+                    <div class="hero-actions animate-fade-up" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 36px;">
+                        <?php if ($isLoggedIn): ?>
+                            <a class="btn btn-glow" style="padding: 13px 28px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/public/dashboard.php">
+                                Go to Your Dashboard
+                            </a>
+                            <a class="btn btn-cosmic-outline" style="padding: 13px 26px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/projects/team-finder.php">
+                                Browse Projects
+                            </a>
+                        <?php else: ?>
+                            <a class="btn btn-glow" style="padding: 13px 30px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/auth/register.php">
+                                Start Collaborating
+                            </a>
+                            <a class="btn btn-cosmic-outline" style="padding: 13px 26px; font-size: 1rem;" href="#features">
+                                Explore Features
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Mini Stat Highlights -->
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;" class="animate-fade-up">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.4rem;">🎯</span>
+                            <div>
+                                <strong style="color: white; font-size: 0.95rem; display: block;">100% Free & Open</strong>
+                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">ADIT & CVM University</span>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.4rem;">🛡️</span>
+                            <div>
+                                <strong style="color: white; font-size: 0.95rem; display: block;">Zero Copyright Risk</strong>
+                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Academic Fair Use & MIT</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="card-cosmic animate-float-delayed" style="padding: 14px 20px; border-radius: var(--radius-md); text-align: left; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-cosmic);">
-                    <span style="font-size: 1.8rem;">🤝</span>
-                    <div>
-                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--cosmic-text-high);">Python for React</div>
-                        <div style="font-size: 0.8rem; color: #a7f3d0;">Peer Skill Barter Active</div>
+                <!-- Right Column: Official Mascot Holographic Showcase -->
+                <div class="hero-mascot-col animate-fade-up">
+                    <div class="hero-mascot-card">
+                        <div class="mascot-img-wrap">
+                            <img src="<?= htmlspecialchars($baseUrl) ?>/images/campus-nexus-mascot.jpg" alt="Campus Nexus Mascot Nexy on Books" class="mascot-img">
+                            <div class="mascot-badge">
+                                <span>✦ Meet Nexy · Campus Collaboration AI</span>
+                                <span style="font-size: 0.75rem; color: #a7f3d0;">● Live Guide</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card-cosmic animate-float" style="padding: 14px 20px; border-radius: var(--radius-md); text-align: left; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-cosmic);">
-                    <span style="font-size: 1.8rem;">🏆</span>
-                    <div>
-                        <div style="font-weight: 700; font-size: 0.95rem; color: var(--cosmic-text-high);">Team Builder Badge</div>
-                        <div style="font-size: 0.8rem; color: #fde68a;">+30 Points Awarded</div>
+                    <!-- Floating Mini Card Overlays -->
+                    <div style="display: flex; gap: 12px; margin-top: 14px;">
+                        <div class="card-cosmic animate-float" style="flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); text-align: left; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.4rem;">🚀</span>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.85rem; color: var(--cosmic-text-high);">AI Drone Project</div>
+                                <div style="font-size: 0.72rem; color: var(--electric-blue);">100% Skill Match</div>
+                            </div>
+                        </div>
+                        <div class="card-cosmic animate-float-delayed" style="flex: 1; padding: 10px 14px; border-radius: var(--radius-sm); text-align: left; display: flex; align-items: center; gap: 10px;">
+                            <span style="font-size: 1.4rem;">🏆</span>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.85rem; color: var(--cosmic-text-high);">Team Builder</div>
+                                <div style="font-size: 0.72rem; color: #fde68a;">+30 Pts Awarded</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -86,6 +124,28 @@ require_once __DIR__ . "/../includes/header.php";
 
         </div>
     </section>
+
+    <!-- ====================================================================
+         SECTION 1B: Live Campus Activity Stream ("Nexus Pulse")
+         ==================================================================== -->
+    <div class="nexus-pulse-bar" aria-label="Campus Activity Ticker">
+        <div class="pulse-inner">
+            <span class="pulse-label"><span class="pulse-dot"></span> Nexus Live Pulse</span>
+            <div class="ticker-viewport">
+                <div class="ticker-track">
+                    <span class="ticker-item">🚀 <strong>Parth Patel (ADIT CE)</strong> launched <em>Campus AI Rover</em> project</span>
+                    <span class="ticker-item">🤝 <strong>Ananya Shah</strong> accepted <em>Python & React</em> peer mentorship</span>
+                    <span class="ticker-item">💡 <strong>Dev Mehta</strong> proposed <em>Green Campus Smart Waste IoT</em> (24 votes)</span>
+                    <span class="ticker-item">🏆 <strong>Sneha Prajapati</strong> unlocked <em>Team Builder</em> badge (+30 pts)</span>
+                    <span class="ticker-item">📅 <strong>Workshop:</strong> <em>Full-Stack Web Innovation Summit</em> 12 seats left</span>
+                    <span class="ticker-item">⚡ <strong>Rohit Joshi</strong> offered <em>Machine Learning</em> guidance on Skill Exchange</span>
+                    <span class="ticker-item">🚀 <strong>Parth Patel (ADIT CE)</strong> launched <em>Campus AI Rover</em> project</span>
+                    <span class="ticker-item">🤝 <strong>Ananya Shah</strong> accepted <em>Python & React</em> peer mentorship</span>
+                    <span class="ticker-item">💡 <strong>Dev Mehta</strong> proposed <em>Green Campus Smart Waste IoT</em> (24 votes)</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- ====================================================================
@@ -100,7 +160,7 @@ require_once __DIR__ . "/../includes/header.php";
                     Great Ideas Stumble Without the Right Team
                 </h2>
                 <p style="color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7;">
-                    Campus project recruiting is usually locked behind private group chats, department silos, and disorganized flyers. Here is how Campus Nexus transforms student collaboration.
+                    Campus project recruiting is usually locked behind scattered WhatsApp groups, department silos, and disorganized flyers. Here is how Campus Nexus transforms student collaboration.
                 </p>
             </div>
 
@@ -291,7 +351,7 @@ require_once __DIR__ . "/../includes/header.php";
 
 
     <!-- ====================================================================
-         SECTION 5: Collaboration & Algorithmic Skill Matching Spotlight
+         SECTION 5: Interactive Skill Compatibility Simulator ("SkillMatch Sandbox")
          ==================================================================== -->
     <section style="padding: 85px 0; background: white; border-bottom: 1px solid var(--border);">
         <div class="container">
@@ -299,66 +359,69 @@ require_once __DIR__ . "/../includes/header.php";
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: center;" class="reveal-on-scroll">
 
                 <div>
-                    <span class="kicker-label kicker-peach" style="margin-bottom: 12px;">Data-Driven Synergy</span>
+                    <span class="kicker-label kicker-peach" style="margin-bottom: 12px;">Interactive Teaming Sandbox</span>
                     <h2 class="font-display text-gradient-peach" style="font-size: clamp(2rem, 3.8vw, 2.6rem); margin: 12px 0 18px;">
-                        Smart Compatibility Engine
+                        Test the Matchmaking Algorithm
                     </h2>
                     <p style="color: var(--text-secondary); line-height: 1.7; font-size: 1.05rem; margin-bottom: 20px;">
-                        Never guess whether you are qualified for a project. When you browse the Project Finder, Campus Nexus matches your catalogued skills against each project’s required stack.
+                        Click on technical skills below to simulate how our backend matchmaking engine computes your dynamic compatibility against open campus projects in real time.
                     </p>
-                    <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="color: var(--success); font-weight: 800; font-size: 1.2rem;">✓</span>
-                            <span style="color: var(--text-primary); font-size: 0.95rem;"><strong>Instant Percentages:</strong> Real-time match scores calculated in PHP/MySQL.</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="color: var(--success); font-weight: 800; font-size: 1.2rem;">✓</span>
-                            <span style="color: var(--text-primary); font-size: 0.95rem;"><strong>Transparent Breakdowns:</strong> See which skills match and which you can learn on the job.</span>
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="color: var(--success); font-weight: 800; font-size: 1.2rem;">✓</span>
-                            <span style="color: var(--text-primary); font-size: 0.95rem;"><strong>Anti-Spam Requests:</strong> Project creators review pending requests before accepting members.</span>
-                        </div>
+
+                    <!-- Interactive Skill Selector Chips -->
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">
+                        Click skills to toggle your student profile:
+                    </div>
+                    <div class="sandbox-chips">
+                        <span class="sandbox-chip active" data-skill="python">Python</span>
+                        <span class="sandbox-chip active" data-skill="robotics">Robotics</span>
+                        <span class="sandbox-chip" data-skill="machine learning">Machine Learning</span>
+                        <span class="sandbox-chip" data-skill="c++">C++</span>
+                        <span class="sandbox-chip" data-skill="react">React</span>
+                        <span class="sandbox-chip" data-skill="mysql">MySQL</span>
+                        <span class="sandbox-chip" data-skill="ui/ux design">UI/UX Design</span>
                     </div>
 
                     <a class="btn btn-glow" href="<?= htmlspecialchars($baseUrl) ?>/modules/projects/team-finder.php">
-                        Try Team Finder Now
+                        Browse Real Campus Projects
                     </a>
                 </div>
 
-                <!-- Simulation Visual Card -->
-                <div class="card-interactive card-peach" style="padding: 28px; box-shadow: var(--shadow-lg);">
+                <!-- Simulation Visual Card with Animated Circular Gauge -->
+                <div class="sandbox-card">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-                        <span class="status" style="background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; font-weight: 700;">
-                            Live Simulation
+                        <span class="status status-peach" style="font-weight: 700;">
+                            Target Project: Autonomous Campus Rover
                         </span>
-                        <span class="status" style="background: var(--primary-light); color: var(--primary); font-weight: 800;">
-                            75% Match
+                        <span class="status" style="background: var(--surface-muted); color: var(--muted); font-size: 0.75rem;">
+                            ADIT Robotics Lab
                         </span>
                     </div>
 
-                    <h3 style="font-family: var(--font-display); margin: 0 0 8px; color: var(--text-primary);">
-                        Autonomous Rover Navigation
-                    </h3>
-                    <p style="color: var(--muted); font-size: 0.9rem; margin-bottom: 16px;">
-                        Building computer-vision pathfinding algorithms for campus competition.
-                    </p>
-
-                    <div style="background: white; border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; margin-bottom: 16px;">
-                        <div style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--muted); margin-bottom: 8px;">
-                            Skills Matched: 3 of 4 Required
+                    <div style="display: flex; align-items: center; gap: 24px; margin: 20px 0;">
+                        <!-- SVG Circular Progress Ring -->
+                        <div style="position: relative; width: 100px; height: 100px; flex-shrink: 0;">
+                            <svg width="100" height="100" viewBox="0 0 100 100" style="transform: rotate(-90deg);">
+                                <circle cx="50" cy="50" r="40" stroke="#f1f5f9" stroke-width="8" fill="none"></circle>
+                                <circle id="sandboxProgressRing" cx="50" cy="50" r="40" stroke="var(--primary)" stroke-width="8" stroke-dasharray="251.3" stroke-dashoffset="125.65" stroke-linecap="round" fill="none" style="transition: stroke-dashoffset 0.5s ease-out, stroke 0.4s ease;"></circle>
+                            </svg>
+                            <div id="sandboxPercent" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; color: var(--text-primary);">
+                                50%
+                            </div>
                         </div>
-                        <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                            <span class="status status-success">✓ Python</span>
-                            <span class="status status-success">✓ Robotics</span>
-                            <span class="status status-success">✓ C++</span>
-                            <span class="status" style="background: #f1f5f9; color: #64748b; border: 1px dashed #cbd5e1;">ROS2 (Learning Opportunity)</span>
+
+                        <div>
+                            <h4 style="margin: 0 0 6px; font-family: var(--font-display); font-size: 1.1rem;">Required Project Skills</h4>
+                            <div style="display: flex; flex-wrap: wrap; gap: 6px; font-size: 0.82rem;">
+                                <span class="status status-success">Python</span>
+                                <span class="status status-success">Robotics</span>
+                                <span class="status status-peach">Machine Learning</span>
+                                <span class="status status-peach">C++</span>
+                            </div>
                         </div>
                     </div>
 
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span style="font-size: 0.85rem; color: var(--muted);">Created by: <strong>Priya S. (Robotics)</strong></span>
-                        <span class="btn btn-sm btn-glow" style="cursor: default; pointer-events: none;">Join Team</span>
+                    <div id="sandboxFeedback" style="background: var(--surface-peach); border: 1px solid var(--peach-200); border-radius: var(--radius-sm); padding: 14px; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6;">
+                        🤝 <strong>Good Foundation!</strong> You match 2 of 4 required skills. Great opportunity to collaborate and learn on the job.
                     </div>
                 </div>
 
@@ -369,47 +432,52 @@ require_once __DIR__ . "/../includes/header.php";
 
 
     <!-- ====================================================================
-         SECTION 6: Gamification, Points & Leaderboard Spotlight
+         SECTION 6: Official Brand Board & Visual Identity
          ==================================================================== -->
     <section class="section-cream bg-grid-peach" style="padding: 85px 0; border-bottom: 1px solid var(--border);">
         <div class="container">
 
-            <div style="text-align: center; max-width: 680px; margin: 0 auto 48px;" class="reveal-on-scroll">
-                <span class="kicker-label kicker-peach">Reward System</span>
+            <div style="text-align: center; max-width: 720px; margin: 0 auto 48px;" class="reveal-on-scroll">
+                <span class="kicker-label kicker-peach">Visual Identity & System Design</span>
                 <h2 class="font-display text-gradient-peach" style="font-size: clamp(2rem, 3.8vw, 2.7rem); margin: 12px 0 16px;">
-                    Recognizing Collaborative Leadership
+                    Crafted for ADIT & CVM University
                 </h2>
                 <p style="color: var(--muted); font-size: 1.05rem;">
-                    Every positive collaborative action earns points and unlocks permanent badges recorded directly to your student record.
+                    A unified brand architecture combining planetary cosmic exploration with collegiate warmth and clean accessible data density.
                 </p>
+            </div>
+
+            <!-- Official Brand Board Showcase Frame -->
+            <div class="card-interactive" style="background: #070a13; border: 1px solid rgba(56, 189, 248, 0.3); border-radius: var(--radius-xl); overflow: hidden; padding: 0; box-shadow: var(--shadow-cosmic); margin-bottom: 36px;">
+                <img src="<?= htmlspecialchars($baseUrl) ?>/images/campus-nexus-brand.png" alt="Campus Nexus Official Brand Identity Board" style="width: 100%; height: auto; display: block;">
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;" class="reveal-on-scroll">
 
                 <div class="card-interactive" style="background: white; border-top: 3px solid #6366f1;">
                     <div style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
-                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">First Project</h4>
+                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">First Project Badge</h4>
                     <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 12px;">Create your first collaborative project on Campus Nexus.</p>
                     <span class="status status-peach">+50 Points</span>
                 </div>
 
                 <div class="card-interactive" style="background: white; border-top: 3px solid #10b981;">
                     <div style="font-size: 2rem; margin-bottom: 10px;">👥</div>
-                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">Team Builder</h4>
+                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">Team Builder Badge</h4>
                     <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 12px;">Accept a student member into your project workspace.</p>
                     <span class="status status-peach">+30 Points</span>
                 </div>
 
                 <div class="card-interactive" style="background: white; border-top: 3px solid #f59e0b;">
                     <div style="font-size: 2rem; margin-bottom: 10px;">🤝</div>
-                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">Skill Sharer</h4>
+                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">Skill Sharer Badge</h4>
                     <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 12px;">Accept a skill exchange request to mentor a peer.</p>
                     <span class="status status-peach">+40 Points</span>
                 </div>
 
                 <div class="card-interactive" style="background: white; border-top: 3px solid #ec4899;">
                     <div style="font-size: 2rem; margin-bottom: 10px;">💡</div>
-                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">Idea Contributor</h4>
+                    <h4 style="margin: 0 0 6px; font-family: var(--font-display);">Idea Contributor Badge</h4>
                     <p style="color: var(--muted); font-size: 0.88rem; margin-bottom: 12px;">Submit your first verified proposal to the Idea Board.</p>
                     <span class="status status-peach">+20 Points</span>
                 </div>

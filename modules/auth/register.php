@@ -110,6 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account | Campus Nexus</title>
     <meta name="description" content="Register for a Campus Nexus student collaboration account.">
+    <!-- Official Favicon -->
+    <link rel="icon" type="image/png" href="../../images/favicon.png">
     <link rel="stylesheet" href="../../css/style.css">
 </head>
 <body class="auth-page bg-grid-peach" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;">
@@ -118,10 +120,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div style="text-align: center; margin-bottom: 24px;">
             <a class="brand" href="../../public/index.php" style="justify-content: center; font-size: 1.5rem; margin-bottom: 12px;">
-                <span class="brand-icon" aria-hidden="true">✦</span>
-                <span class="brand-text">Campus <span class="brand-accent">Nexus</span></span>
+                <div class="brand-logo-wrap" style="width: 40px; height: 40px;">
+                    <img src="../../images/cn-logo.png" alt="Campus Nexus Emblem" class="brand-logo-img">
+                </div>
+                <div class="brand-info" style="text-align: left;">
+                    <span class="brand-text">Campus <span class="brand-accent">Nexus</span></span>
+                    <span class="brand-subtext">ADIT · CVM University</span>
+                </div>
             </a>
-            <h1 class="font-display" style="font-size: 1.8rem; margin: 12px 0 6px; color: var(--text-primary);">Join Campus Nexus</h1>
+
+            <!-- Institutional Affiliation Badge -->
+            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; background: var(--surface-muted); border: 1px solid var(--border); border-radius: var(--radius-full); margin: 6px 0 14px;">
+                <img src="../../images/adit-logo.png" alt="ADIT" style="height: 18px; width: auto;">
+                <span style="font-size: 0.72rem; font-weight: 700; color: var(--muted);">ADIT & CVM UNIVERSITY</span>
+                <img src="../../images/cvm-university-logo.png" alt="CVM" style="height: 18px; width: auto;">
+            </div>
+
+            <h1 class="font-display" style="font-size: 1.8rem; margin: 4px 0 6px; color: var(--text-primary);">Join Campus Nexus</h1>
             <p class="auth-subtitle" style="color: var(--muted); margin: 0; font-size: 0.95rem;">
                 Connect with peers, find project teams, and exchange skills.
             </p>
