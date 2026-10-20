@@ -15,9 +15,11 @@ $userId = (int) $_SESSION["user_id"];
 $sql = "SELECT
             users.name,
             users.email,
+            users.last_login_at,
             users.created_at,
             student_profiles.department,
             student_profiles.semester,
+            student_profiles.roll_number,
             student_profiles.bio,
             student_profiles.profile_picture
         FROM users
@@ -114,13 +116,24 @@ require_once __DIR__ . "/../../includes/header.php";
                 <span class="status" style="background: var(--surface-muted); color: var(--text-secondary);">
                     Semester <?= htmlspecialchars((string) ($profile["semester"] ?? 1)) ?>
                 </span>
+                <?php if (!empty($profile["roll_number"])): ?>
+                    <span class="status" style="background: rgba(99, 102, 241, 0.1); color: var(--primary); font-weight: 700;">
+                        ID: <?= htmlspecialchars($profile["roll_number"]) ?>
+                    </span>
+                <?php endif; ?>
             </div>
 
             <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--border);">
 
             <div style="text-align: left; font-size: 0.88rem; color: var(--muted); line-height: 1.8;">
+                <?php if (!empty($profile["roll_number"])): ?>
+                    <div>✦ <strong>Enrollment ID:</strong> <?= htmlspecialchars($profile["roll_number"]) ?></div>
+                <?php endif; ?>
                 <div>✦ <strong>Member Since:</strong> <?= date("M Y", strtotime($profile["created_at"] ?? "now")) ?></div>
-                <div>✦ <strong>Role:</strong> University Student</div>
+                <?php if (!empty($profile["last_login_at"])): ?>
+                    <div>✦ <strong>Last Session:</strong> <?= date("M d, Y h:i A", strtotime($profile["last_login_at"])) ?></div>
+                <?php endif; ?>
+                <div>✦ <strong>Status:</strong> Verified Student</div>
             </div>
         </div>
 

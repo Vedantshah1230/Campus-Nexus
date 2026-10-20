@@ -149,8 +149,8 @@ erDiagram
 ```
 
 ### Table Summary:
-1. `users` — Student accounts, email, role (`student`, `admin`), and password hashes.
-2. `student_profiles` — Academic metadata (department, semester, bio, avatar).
+1. `users` — Student accounts, email, role (`student`, `admin`), `last_login_at`, and password hashes.
+2. `student_profiles` — Academic metadata (department, semester, `roll_number`, bio, avatar).
 3. `skills` — Standardized skill taxonomy with categories.
 4. `user_skills` — Pivot table storing student skills and proficiency rankings.
 5. `interests` — Catalog of student interest domains.
@@ -167,6 +167,7 @@ erDiagram
 16. `badges` — Achievement definition catalog with point values and criteria.
 17. `user_badges` — Composite key (`user_id`, `badge_id`) ensuring badges are awarded exactly once.
 18. `user_points` — Aggregated student point score with `ON DUPLICATE KEY UPDATE` handling.
+19. `auth_logs` — Institutional access & audit trail (login attempts, successes, registrations, logouts with IP and device telemetry).
 
 ---
 
@@ -180,16 +181,17 @@ campus-nexus/Campus-Nexus/
 │   ├── database.php                # Active database connection (supports env vars)
 │   └── database.example.php        # Configuration template for deployment
 ├── css/
-│   └── style.css                   # Master Design System (Cosmic + Peach + Dashboard)
+│   └── style.css                   # Master Design System (Cosmic + Institutional Portal)
 ├── database/
 │   └── campus_nexus.sql            # Complete database schema and non-sensitive seed data
 ├── includes/
+│   ├── auth_logger.php             # Institutional audit & security logging service
 │   ├── header.php                  # Global dynamic navigation, breadcrumbs & flash alerts
 │   └── footer.php                  # Global 3-column footer & deferred script loader
 ├── js/
 │   └── main.js                     # Vanilla mobile drawer toggle, alert dismissal & scroll reveal
 ├── modules/
-│   ├── auth/                       # Registration, login with CSRF, secure logout
+│   ├── auth/                       # Institutional SSO portal, dual-identifier login, enrollment
 │   ├── students/                   # Profile view, editing, skills, and interests matrix
 │   ├── projects/                   # Team finder, project creation, join requests & management
 │   ├── skills/                     # Peer skill exchange offers and mentorship requests

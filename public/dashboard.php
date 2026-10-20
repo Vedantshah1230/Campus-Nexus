@@ -76,6 +76,17 @@ $stmt->close();
 
 $stats["total_points"] = $stats["total_points"] ?? 0;
 
+// Fetch student institutional metadata
+$profileSql = "SELECT sp.department, sp.semester, sp.roll_number, u.last_login_at 
+               FROM users u 
+               LEFT JOIN student_profiles sp ON u.id = sp.user_id 
+               WHERE u.id = ? LIMIT 1";
+$profStmt = $conn->prepare($profileSql);
+$profStmt->bind_param("i", $userId);
+$profStmt->execute();
+$studentMeta = $profStmt->get_result()->fetch_assoc();
+$profStmt->close();
+
 $pageTitle = "Dashboard";
 $pageDescription = "Monitor your campus collaboration metrics, active teams, skills, and achievements.";
 $breadcrumbs = [
@@ -93,8 +104,14 @@ require_once __DIR__ . "/../includes/header.php";
             <h1 class="page-header-title">
                 Welcome, <?= htmlspecialchars($_SESSION["user_name"] ?? "Student") ?>!
             </h1>
-            <p class="page-header-subtitle">
-                Your campus activities, collaborations, and achievements in one place.
+            <p class="page-header-subtitle" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                <?php if (!empty($studentMeta["department"])): ?>
+                    <span class="status status-peach" style="font-size: 0.76rem; padding: 3px 10px;"><?= htmlspecialchars($studentMeta["department"]) ?></span>
+                <?php endif; ?>
+                <?php if (!empty($studentMeta["roll_number"])): ?>
+                    <span class="status" style="background: rgba(99, 102, 241, 0.1); color: var(--primary); font-size: 0.76rem; padding: 3px 10px; font-weight: 700;">ID: <?= htmlspecialchars($studentMeta["roll_number"]) ?></span>
+                <?php endif; ?>
+                <span>Your campus activities, collaborations, and achievements in one place.</span>
             </p>
         </div>
         <div class="page-header-actions">

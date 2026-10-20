@@ -12,6 +12,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `email` VARCHAR(150) NOT NULL UNIQUE,
     `password` VARCHAR(255) NOT NULL,
     `role` ENUM('student', 'admin') DEFAULT 'student',
+    `last_login_at` TIMESTAMP NULL DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -21,6 +22,7 @@ CREATE TABLE IF NOT EXISTS `student_profiles` (
     `user_id` INT PRIMARY KEY,
     `department` VARCHAR(100) DEFAULT NULL,
     `semester` INT DEFAULT NULL,
+    `roll_number` VARCHAR(50) DEFAULT NULL,
     `bio` TEXT DEFAULT NULL,
     `profile_picture` VARCHAR(255) DEFAULT NULL,
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -192,6 +194,20 @@ CREATE TABLE IF NOT EXISTS `user_points` (
     `points` INT DEFAULT 0,
     `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 19. Institutional Authentication & Security Audit Logs
+CREATE TABLE IF NOT EXISTS `auth_logs` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT UNSIGNED NULL,
+    `email` VARCHAR(150) NOT NULL,
+    `action` ENUM('LOGIN_SUCCESS', 'LOGIN_FAILED', 'REGISTRATION', 'LOGOUT') NOT NULL,
+    `ip_address` VARCHAR(45) NOT NULL,
+    `user_agent` VARCHAR(255) DEFAULT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    KEY `idx_user_id` (`user_id`),
+    KEY `idx_action` (`action`),
+    KEY `idx_created_at` (`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- =====================================================================

@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $department = trim($_POST["department"] ?? "");
         $semester = (int) ($_POST["semester"] ?? 1);
+        $rollNumber = strtoupper(trim($_POST["roll_number"] ?? ""));
         $bio = trim($_POST["bio"] ?? "");
 
         if ($department === "") {
@@ -42,18 +43,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
 
             $sql = "INSERT INTO student_profiles
-                        (user_id, department, semester, bio)
-                    VALUES (?, ?, ?, ?)
+                        (user_id, department, semester, roll_number, bio)
+                    VALUES (?, ?, ?, ?, ?)
                     ON DUPLICATE KEY UPDATE
                         department = VALUES(department),
                         semester = VALUES(semester),
+                        roll_number = VALUES(roll_number),
                         bio = VALUES(bio)";
 
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("isis", $userId, $department, $semester, $bio);
+            $stmt->bind_param("isiss", $userId, $department, $semester, $rollNumber, $bio);
 
             if ($stmt->execute()) {
-                $message = "Your student profile has been updated successfully.";
+                $_SESSION["user_department"] = $department;
+                $_SESSION["user_roll_number"] = $rollNumber;
+                $message = "Your institutional student profile has been updated successfully.";
                 $messageType = "success";
             } else {
                 $message = "Failed to update profile. Please try again.";
@@ -66,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 // Fetch current values
-$sql = "SELECT department, semester, bio FROM student_profiles WHERE user_id = ?";
+$sql = "SELECT department, semester, roll_number, bio FROM student_profiles WHERE user_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -107,6 +111,21 @@ require_once __DIR__ . "/../../includes/header.php";
 
         <form method="POST" action="edit-profile.php">
             <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION["csrf_token"]) ?>">
+
+            <div style="margin-bottom: 20px;">
+                <label for="roll_number" style="display: block; font-weight: 600; margin-bottom: 6px;">Student Roll / Enrollment ID</label>
+                <input
+                    type="text"
+                    id="roll_number"
+                    name="roll_number"
+                    value="<?= htmlspecialchars($profile["roll_number"] ?? "") ?>"
+                    placeholder="e.g. 2024CS1049"
+                    style="text-transform: uppercase;"
+                >
+                <span style="font-size: 0.82rem; color: var(--muted); display: block; margin-top: 4px;">
+                    Your official university enrollment identifier. Used for direct portal sign-in and academic verification.
+                </span>
+            </div>
 
             <div style="margin-bottom: 20px;">
                 <label for="department" style="display: block; font-weight: 600; margin-bottom: 6px;">Department / Major</label>
