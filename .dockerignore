@@ -1,0 +1,7 @@
+.git
+.github
+*.log
+scratch/
+test_*.php
+.vscode
+.idea
