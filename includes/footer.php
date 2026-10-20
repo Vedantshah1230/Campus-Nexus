@@ -58,7 +58,6 @@ if (!isset($baseUrl)) {
                     <li><a href="<?= htmlspecialchars($baseUrl) ?>/modules/auth/login.php">🔐 Student Sign In</a></li>
                     <li><a href="<?= htmlspecialchars($baseUrl) ?>/modules/auth/register.php">✨ Create Student Account</a></li>
                 <?php endif; ?>
-                <li><a href="<?= htmlspecialchars($baseUrl) ?>/docs/VIVA_AND_DEMO_GUIDE.md">📖 Viva & Architecture Guide</a></li>
             </ul>
         </div>
 

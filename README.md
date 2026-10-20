@@ -23,7 +23,6 @@
 - [Manual Testing Checklist](#-manual-testing-checklist)
 - [Git Repository Setup Guide](#-git-repository-setup-guide)
 - [Known Limitations & Future Roadmap](#-known-limitations--future-roadmap)
-- [Viva & Demonstration Guide](#-viva--demonstration-guide)
 
 ---
 
@@ -184,8 +183,6 @@ campus-nexus/Campus-Nexus/
 │   └── style.css                   # Master Design System (Cosmic + Peach + Dashboard)
 ├── database/
 │   └── campus_nexus.sql            # Complete database schema and non-sensitive seed data
-├── docs/
-│   └── VIVA_AND_DEMO_GUIDE.md      # Comprehensive Viva preparation & presentation guide
 ├── includes/
 │   ├── header.php                  # Global dynamic navigation, breadcrumbs & flash alerts
 │   └── footer.php                  # Global 3-column footer & deferred script loader
@@ -312,19 +309,6 @@ To maintain academic and professional honesty, the following items represent int
 - **Automated Notifications:** Currently uses session flash messages. An SMTP/PHPMailer email dispatch queue for event reminders and request approvals is planned.
 - **SSO Authentication:** Currently uses native email/password authentication. Future integration with university SAML/OAuth2 systems (Google Workspace for Education, Microsoft Azure AD) will streamline campus-wide onboarding.
 - **Resume / Attachment Uploads:** Storage for portfolio PDF attachments via local S3-compatible cloud storage.
-
----
-
-## 📖 Viva & Demonstration Guide
-
-A detailed 10-point viva voce guide has been prepared for academic defense and project evaluation:
-👉 **[Read the Complete Viva & Demo Guide](docs/VIVA_AND_DEMO_GUIDE.md)**
-
-Includes:
-- 5–8 minute timed presentation script with exact spoken talking points.
-- Deep-dive architectural breakdown of PHP/MySQL design patterns.
-- 15+ Examiner questions with beginner-friendly, high-scoring answers.
-- SQL query explanations (JOINs, Aggregation, Transactions, and Constraints).
 
 ---
 
