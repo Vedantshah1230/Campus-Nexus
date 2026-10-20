@@ -30,156 +30,66 @@ require_once __DIR__ . "/../includes/header.php";
                 </div>
             </div>
 
-            <!-- 2-Column Hero Showcase Grid -->
-            <div class="hero-grid">
+            <!-- Centered Hero Layout -->
+            <div class="hero-content animate-fade-up" style="max-width: 860px; margin: 0 auto; text-align: center;">
+                <div style="margin-bottom: 18px;">
+                    <span class="kicker-label kicker-cosmic">
+                        ✦ The Central Student Collaboration Platform
+                    </span>
+                </div>
 
-                <!-- Left Column: Copy & CTAs -->
-                <div class="hero-content">
-                    <div class="animate-fade-up" style="margin-bottom: 16px;">
-                        <span class="kicker-label kicker-cosmic">
-                            ✦ Official Campus Collaboration Hub
-                        </span>
-                    </div>
+                <h1 class="font-display" style="font-size: clamp(2.6rem, 5.5vw, 4.4rem); line-height: 1.12; margin: 0 0 22px;">
+                    Your Campus. <br>
+                    Your Ideas. <span class="text-gradient-cosmic">Your Future.</span>
+                </h1>
 
-                    <h1 class="font-display animate-fade-up" style="font-size: clamp(2.4rem, 5.2vw, 4.2rem); line-height: 1.12; margin: 0 0 20px;">
-                        Your Campus. <br>
-                        Your Ideas. <span class="text-gradient-cosmic">Your Future.</span>
-                    </h1>
+                <p class="hero-description" style="font-size: 1.18rem; max-width: 720px; margin: 0 auto 36px; color: var(--cosmic-text-muted); line-height: 1.75;">
+                    Connect across campus departments to discover cross-functional hackathon teams,
+                    exchange peer skills, pitch campus initiatives, and attend workshops — all in one unified, gamified ecosystem.
+                </p>
 
-                    <p class="hero-description animate-fade-up" style="font-size: 1.1rem; margin: 0 0 32px; color: var(--cosmic-text-muted); line-height: 1.7;">
-                        Connect across campus departments to discover cross-functional hackathon teams,
-                        exchange peer skills, pitch campus initiatives, and attend workshops — all in one unified, gamified ecosystem.
-                    </p>
+                <div class="hero-actions" style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 44px;">
+                    <?php if ($isLoggedIn): ?>
+                        <a class="btn btn-glow" style="padding: 14px 32px; font-size: 1.05rem;" href="<?= htmlspecialchars($baseUrl) ?>/public/dashboard.php">
+                            Go to Your Dashboard
+                        </a>
+                        <a class="btn btn-cosmic-outline" style="padding: 14px 28px; font-size: 1.05rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/projects/team-finder.php">
+                            Browse Projects
+                        </a>
+                    <?php else: ?>
+                        <a class="btn btn-glow" style="padding: 14px 34px; font-size: 1.05rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/auth/register.php">
+                            Start Collaborating
+                        </a>
+                        <a class="btn btn-cosmic-outline" style="padding: 14px 28px; font-size: 1.05rem;" href="#features">
+                            Explore Features
+                        </a>
+                    <?php endif; ?>
+                </div>
 
-                    <div class="hero-actions animate-fade-up" style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 36px;">
-                        <?php if ($isLoggedIn): ?>
-                            <a class="btn btn-glow" style="padding: 13px 28px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/public/dashboard.php">
-                                Go to Your Dashboard
-                            </a>
-                            <a class="btn btn-cosmic-outline" style="padding: 13px 26px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/projects/team-finder.php">
-                                Browse Projects
-                            </a>
-                        <?php else: ?>
-                            <a class="btn btn-glow" style="padding: 13px 30px; font-size: 1rem;" href="<?= htmlspecialchars($baseUrl) ?>/modules/auth/register.php">
-                                Start Collaborating
-                            </a>
-                            <a class="btn btn-cosmic-outline" style="padding: 13px 26px; font-size: 1rem;" href="#features">
-                                Explore Features
-                            </a>
-                        <?php endif; ?>
-                    </div>
-
-                    <!-- Mini Stat Highlights -->
-                    <div style="display: flex; gap: 20px; flex-wrap: wrap;" class="animate-fade-up">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="font-size: 1.4rem;">🎯</span>
-                            <div>
-                                <strong style="color: white; font-size: 0.95rem; display: block;">100% Free & Open</strong>
-                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Campus-Wide Network</span>
-                            </div>
+                <!-- Feature Metric Highlights -->
+                <div style="display: flex; gap: 28px; justify-content: center; flex-wrap: wrap;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.4rem;">🎯</span>
+                        <div style="text-align: left;">
+                            <strong style="color: white; font-size: 0.95rem; display: block;">100% Free & Open</strong>
+                            <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Campus-Wide Network</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <span style="font-size: 1.4rem;">🛡️</span>
-                            <div>
-                                <strong style="color: white; font-size: 0.95rem; display: block;">Open & Collaborative</strong>
-                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Student Innovation & MIT</span>
-                            </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.4rem;">🤝</span>
+                        <div style="text-align: left;">
+                            <strong style="color: white; font-size: 0.95rem; display: block;">Smart Skill Match</strong>
+                            <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Cross-Domain Teaming</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.4rem;">🏆</span>
+                        <div style="text-align: left;">
+                            <strong style="color: white; font-size: 0.95rem; display: block;">Gamified XP & Badges</strong>
+                            <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Verified Achievements</span>
                         </div>
                     </div>
                 </div>
-
-                <!-- Right Column: Interactive 3D Nexus Orbital Synergy Station -->
-                <div class="hero-synergy-col animate-fade-up">
-                    <div class="synergy-orb-station" id="synergyStation" data-tilt>
-                        <!-- Atmospheric Ambient Glow Halo -->
-                        <div class="orb-ambient-glow" aria-hidden="true"></div>
-
-                        <!-- Station Header -->
-                        <div class="synergy-station-header">
-                            <div class="synergy-station-pill">
-                                <span class="live-pulse-dot"></span>
-                                <span>Nexus Synergy Core</span>
-                            </div>
-                            <div class="synergy-badge-count">
-                                <span id="activeNodesCount">4</span> Active Hubs
-                            </div>
-                        </div>
-
-                        <!-- 3D Orbital Reactor Viewport -->
-                        <div class="synergy-reactor-stage">
-                            <!-- Concentric Orbital Ellipses with 3D Depth -->
-                            <div class="orbital-ring ring-outer"></div>
-                            <div class="orbital-ring ring-middle"></div>
-                            <div class="orbital-ring ring-inner"></div>
-
-                            <!-- Central Glowing Nexus Core with 3D Logo -->
-                            <div class="reactor-core">
-                                <div class="core-logo-halo"></div>
-                                <img src="<?= htmlspecialchars($baseUrl) ?>/images/cn-logo.png" alt="Campus Nexus Core" class="core-logo-img">
-                            </div>
-
-                            <!-- Interactive Orbiting Collaboration Pods -->
-                            <div class="orbital-pod pod-1" data-category="projects">
-                                <span class="pod-icon">🤖</span>
-                                <div class="pod-info">
-                                    <span class="pod-title">AI Rover Team</span>
-                                    <span class="pod-sub">4/5 Teammates · 98% Match</span>
-                                </div>
-                            </div>
-
-                            <div class="orbital-pod pod-2" data-category="skills">
-                                <span class="pod-icon">🤝</span>
-                                <div class="pod-info">
-                                    <span class="pod-title">Python ⇄ React</span>
-                                    <span class="pod-sub">Peer Mentorship Active</span>
-                                </div>
-                            </div>
-
-                            <div class="orbital-pod pod-3" data-category="ideas">
-                                <span class="pod-icon">💡</span>
-                                <div class="pod-info">
-                                    <span class="pod-title">Smart Campus IoT</span>
-                                    <span class="pod-sub">52 Upvotes · High Impact</span>
-                                </div>
-                            </div>
-
-                            <div class="orbital-pod pod-4" data-category="projects">
-                                <span class="pod-icon">⚡</span>
-                                <div class="pod-info">
-                                    <span class="pod-title">Full-Stack Sprint</span>
-                                    <span class="pod-sub">Workshop in 2 Days</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Interactive Filter Controls (Morphs radar in real time) -->
-                        <div class="synergy-controls" role="tablist">
-                            <button class="synergy-tab active" data-mode="all" type="button">🌐 All Feeds</button>
-                            <button class="synergy-tab" data-mode="projects" type="button">🚀 Projects</button>
-                            <button class="synergy-tab" data-mode="skills" type="button">⚡ Skills</button>
-                            <button class="synergy-tab" data-mode="ideas" type="button">💡 Ideas</button>
-                        </div>
-
-                        <!-- Live Telemetry Footer Metrics -->
-                        <div class="synergy-station-footer">
-                            <div class="station-metric">
-                                <span class="metric-num text-gradient-cosmic" id="metricMatch">98%</span>
-                                <span class="metric-desc">Synergy Match</span>
-                            </div>
-                            <div class="station-metric-divider"></div>
-                            <div class="station-metric">
-                                <span class="metric-num" style="color: #38bdf8;" id="metricHours">Instant</span>
-                                <span class="metric-desc">Teaming Speed</span>
-                            </div>
-                            <div class="station-metric-divider"></div>
-                            <div class="station-metric">
-                                <span class="metric-num" style="color: #a855f7;" id="metricXp">+50 XP</span>
-                                <span class="metric-desc">Peer Bounty</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
         </div>
@@ -498,103 +408,13 @@ require_once __DIR__ . "/../includes/header.php";
         <div class="container">
 
             <div style="text-align: center; max-width: 720px; margin: 0 auto 48px;" class="reveal-on-scroll">
-                <span class="kicker-label kicker-peach">Visual Identity & System Design</span>
+                <span class="kicker-label kicker-peach">Gamification & Recognition</span>
                 <h2 class="font-display text-gradient-peach" style="font-size: clamp(2rem, 3.8vw, 2.7rem); margin: 12px 0 16px;">
-                    Crafted for Student Innovation
+                    Earn Badges & Level Up Your Profile
                 </h2>
                 <p style="color: var(--muted); font-size: 1.05rem;">
-                    A unified brand architecture combining planetary cosmic exploration with collegiate warmth and clean accessible data density.
+                    Get recognized across campus for launching projects, mentoring peers, and contributing innovative proposals.
                 </p>
-            </div>
-
-            <!-- Interactive Live Innovation Radar & Dynamic Milestone Stream -->
-            <div class="innovation-radar-frame" data-tilt>
-                <div class="radar-header-bar">
-                    <div class="radar-live-badge">
-                        <span class="live-pulse-dot"></span>
-                        <span>Nexus Synergy Engine · Real-Time Campus Network</span>
-                    </div>
-                    <div class="radar-stats-tags">
-                        <span class="radar-tag"><strong id="radarActiveCounter">142</strong> Students Online</span>
-                        <span class="radar-tag"><strong id="radarProjectsCounter">38</strong> Active Sprints</span>
-                    </div>
-                </div>
-
-                <div class="radar-grid-display">
-                    <!-- Column 1: Live Interactive Skill Synergy Radar -->
-                    <div class="radar-panel">
-                        <div class="panel-header">
-                            <span class="panel-icon">⚡</span>
-                            <div>
-                                <h4 style="margin: 0; color: white; font-size: 0.95rem;">Cross-Domain Skill Affinity</h4>
-                                <span style="font-size: 0.75rem; color: var(--cosmic-text-muted);">Real-time teaming probabilities</span>
-                            </div>
-                        </div>
-                        <div class="synergy-bars">
-                            <div class="synergy-bar-item">
-                                <div class="bar-labels">
-                                    <span>AI / Machine Learning + Robotics</span>
-                                    <strong style="color: #38bdf8;">98% Synergy</strong>
-                                </div>
-                                <div class="bar-track">
-                                    <div class="bar-fill bar-fill-1"></div>
-                                </div>
-                            </div>
-                            <div class="synergy-bar-item">
-                                <div class="bar-labels">
-                                    <span>Full-Stack Web + UI/UX Design</span>
-                                    <strong style="color: #a855f7;">94% Synergy</strong>
-                                </div>
-                                <div class="bar-track">
-                                    <div class="bar-fill bar-fill-2"></div>
-                                </div>
-                            </div>
-                            <div class="synergy-bar-item">
-                                <div class="bar-labels">
-                                    <span>Cybersecurity + Cloud DevOps</span>
-                                    <strong style="color: #10b981;">91% Synergy</strong>
-                                </div>
-                                <div class="bar-track">
-                                    <div class="bar-fill bar-fill-3"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Column 2: Live Activity Feed Stream -->
-                    <div class="radar-panel">
-                        <div class="panel-header">
-                            <span class="panel-icon">🛰️</span>
-                            <div>
-                                <h4 style="margin: 0; color: white; font-size: 0.95rem;">Live Teaming Telemetry</h4>
-                                <span style="font-size: 0.75rem; color: var(--cosmic-text-muted);">Instant cross-department matchmaking</span>
-                            </div>
-                        </div>
-                        <div class="radar-stream-list" id="radarTelemetryStream">
-                            <div class="stream-item">
-                                <span class="stream-dot stream-dot-green"></span>
-                                <div class="stream-text">
-                                    <strong>Dev Mehta</strong> created project <em>Smart IoT Waste</em>
-                                    <span class="stream-time">Just now</span>
-                                </div>
-                            </div>
-                            <div class="stream-item">
-                                <span class="stream-dot stream-dot-cyan"></span>
-                                <div class="stream-text">
-                                    <strong>Ananya Shah</strong> traded <em>Python for React</em>
-                                    <span class="stream-time">1m ago</span>
-                                </div>
-                            </div>
-                            <div class="stream-item">
-                                <span class="stream-dot stream-dot-purple"></span>
-                                <div class="stream-text">
-                                    <strong>Parth Patel</strong> matched with <em>Robotics Specialist</em>
-                                    <span class="stream-time">3m ago</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;" class="reveal-on-scroll">

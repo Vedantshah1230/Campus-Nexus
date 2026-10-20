@@ -279,55 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | 7. Interactive Synergy Station Reactor Controller
-    |--------------------------------------------------------------------------
-    */
-    const synergyStation = document.getElementById('synergyStation');
-    if (synergyStation) {
-        const tabs = synergyStation.querySelectorAll('.synergy-tab');
-        const pods = synergyStation.querySelectorAll('.orbital-pod');
-        const activeNodesCount = document.getElementById('activeNodesCount');
-        const metricMatch = document.getElementById('metricMatch');
-        const metricHours = document.getElementById('metricHours');
-        const metricXp = document.getElementById('metricXp');
-
-        const modeConfig = {
-            all: { count: '4', match: '98%', speed: 'Instant', xp: '+50 XP' },
-            projects: { count: '2', match: '96%', speed: '5 mins', xp: '+60 XP' },
-            skills: { count: '1', match: '99%', speed: 'Direct', xp: '+40 XP' },
-            ideas: { count: '1', match: '92%', speed: 'Trending', xp: '+30 XP' }
-        };
-
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                const mode = tab.getAttribute('data-mode');
-
-                pods.forEach(pod => {
-                    const category = pod.getAttribute('data-category');
-                    if (mode === 'all' || category === mode) {
-                        pod.style.opacity = '1';
-                        pod.style.transform = 'scale(1)';
-                        pod.style.pointerEvents = 'auto';
-                    } else {
-                        pod.style.opacity = '0.22';
-                        pod.style.transform = 'scale(0.92)';
-                        pod.style.pointerEvents = 'none';
-                    }
-                });
-
-                if (modeConfig[mode]) {
-                    if (activeNodesCount) activeNodesCount.textContent = modeConfig[mode].count;
-                    if (metricMatch) metricMatch.textContent = modeConfig[mode].match;
-                    if (metricHours) metricHours.textContent = modeConfig[mode].speed;
-                    if (metricXp) metricXp.textContent = modeConfig[mode].xp;
-                }
-            });
-        });
-    }
 
     /*
     |--------------------------------------------------------------------------
