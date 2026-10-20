@@ -1,7 +1,7 @@
 <?php
 
 $pageTitle = "Student Collaboration Hub";
-$pageDescription = "Connect with students, discover project teams with skill matching, barter skills, vote on ideas, and attend campus workshops at ADIT, CVM University.";
+$pageDescription = "Connect with students, discover project teams with skill matching, barter skills, vote on ideas, and attend campus workshops.";
 
 require_once __DIR__ . "/../includes/header.php";
 
@@ -22,12 +22,11 @@ require_once __DIR__ . "/../includes/header.php";
 
         <div class="container" style="position: relative; z-index: 2;">
 
-            <!-- Institutional Accreditation Banner -->
+            <!-- Campus Nexus Official Innovation Hub Banner -->
             <div style="text-align: center; margin-bottom: 28px;">
                 <div class="hero-institution-banner animate-fade-up">
-                    <img src="<?= htmlspecialchars($baseUrl) ?>/images/adit-logo.png" alt="ADIT Crest" class="hero-inst-img">
-                    <span class="hero-inst-text">A D Patel Institute of Technology · CVM University</span>
-                    <img src="<?= htmlspecialchars($baseUrl) ?>/images/cvm-university-logo.png" alt="CVM University Crest" class="hero-inst-img">
+                    <img src="<?= htmlspecialchars($baseUrl) ?>/images/cn-logo.png" alt="Campus Nexus Logo" class="hero-inst-img">
+                    <span class="hero-inst-text">Campus Nexus · Student Innovation & Collaboration Network</span>
                 </div>
             </div>
 
@@ -48,7 +47,7 @@ require_once __DIR__ . "/../includes/header.php";
                     </h1>
 
                     <p class="hero-description animate-fade-up" style="font-size: 1.1rem; margin: 0 0 32px; color: var(--cosmic-text-muted); line-height: 1.7;">
-                        Connect across departments at ADIT to discover cross-functional hackathon teams,
+                        Connect across campus departments to discover cross-functional hackathon teams,
                         exchange peer skills, pitch campus initiatives, and attend workshops — all in one unified, gamified ecosystem.
                     </p>
 
@@ -76,14 +75,14 @@ require_once __DIR__ . "/../includes/header.php";
                             <span style="font-size: 1.4rem;">🎯</span>
                             <div>
                                 <strong style="color: white; font-size: 0.95rem; display: block;">100% Free & Open</strong>
-                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">ADIT & CVM University</span>
+                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Campus-Wide Network</span>
                             </div>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <span style="font-size: 1.4rem;">🛡️</span>
                             <div>
-                                <strong style="color: white; font-size: 0.95rem; display: block;">Zero Copyright Risk</strong>
-                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Academic Fair Use & MIT</span>
+                                <strong style="color: white; font-size: 0.95rem; display: block;">Open & Collaborative</strong>
+                                <span style="font-size: 0.78rem; color: var(--cosmic-text-muted);">Student Innovation & MIT</span>
                             </div>
                         </div>
                     </div>
@@ -133,13 +132,13 @@ require_once __DIR__ . "/../includes/header.php";
             <span class="pulse-label"><span class="pulse-dot"></span> Nexus Live Pulse</span>
             <div class="ticker-viewport">
                 <div class="ticker-track">
-                    <span class="ticker-item">🚀 <strong>Parth Patel (ADIT CE)</strong> launched <em>Campus AI Rover</em> project</span>
+                    <span class="ticker-item">🚀 <strong>Parth Patel (Computer Engg)</strong> launched <em>Campus AI Rover</em> project</span>
                     <span class="ticker-item">🤝 <strong>Ananya Shah</strong> accepted <em>Python & React</em> peer mentorship</span>
                     <span class="ticker-item">💡 <strong>Dev Mehta</strong> proposed <em>Green Campus Smart Waste IoT</em> (24 votes)</span>
                     <span class="ticker-item">🏆 <strong>Sneha Prajapati</strong> unlocked <em>Team Builder</em> badge (+30 pts)</span>
                     <span class="ticker-item">📅 <strong>Workshop:</strong> <em>Full-Stack Web Innovation Summit</em> 12 seats left</span>
                     <span class="ticker-item">⚡ <strong>Rohit Joshi</strong> offered <em>Machine Learning</em> guidance on Skill Exchange</span>
-                    <span class="ticker-item">🚀 <strong>Parth Patel (ADIT CE)</strong> launched <em>Campus AI Rover</em> project</span>
+                    <span class="ticker-item">🚀 <strong>Parth Patel (Computer Engg)</strong> launched <em>Campus AI Rover</em> project</span>
                     <span class="ticker-item">🤝 <strong>Ananya Shah</strong> accepted <em>Python & React</em> peer mentorship</span>
                     <span class="ticker-item">💡 <strong>Dev Mehta</strong> proposed <em>Green Campus Smart Waste IoT</em> (24 votes)</span>
                 </div>
@@ -393,7 +392,7 @@ require_once __DIR__ . "/../includes/header.php";
                             Target Project: Autonomous Campus Rover
                         </span>
                         <span class="status" style="background: var(--surface-muted); color: var(--muted); font-size: 0.75rem;">
-                            ADIT Robotics Lab
+                            Campus Robotics Lab
                         </span>
                     </div>
 
@@ -440,7 +439,7 @@ require_once __DIR__ . "/../includes/header.php";
             <div style="text-align: center; max-width: 720px; margin: 0 auto 48px;" class="reveal-on-scroll">
                 <span class="kicker-label kicker-peach">Visual Identity & System Design</span>
                 <h2 class="font-display text-gradient-peach" style="font-size: clamp(2rem, 3.8vw, 2.7rem); margin: 12px 0 16px;">
-                    Crafted for ADIT & CVM University
+                    Crafted for Student Innovation
                 </h2>
                 <p style="color: var(--muted); font-size: 1.05rem;">
                     A unified brand architecture combining planetary cosmic exploration with collegiate warmth and clean accessible data density.

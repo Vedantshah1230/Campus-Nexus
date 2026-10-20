@@ -19,35 +19,17 @@ if (!isset($baseUrl)) {
         <!-- Column 1: Brand & Institutional Identity -->
         <div class="footer-brand-col">
             <a class="brand footer-brand" href="<?= htmlspecialchars($baseUrl) ?>/public/index.php" aria-label="Campus Nexus Home">
-                <div class="brand-logo-wrap" style="width: 38px; height: 38px;">
+                <div class="brand-logo-wrap" style="width: 42px; height: 42px;">
                     <img src="<?= htmlspecialchars($baseUrl) ?>/images/cn-logo.png" alt="Campus Nexus Emblem" class="brand-logo-img">
                 </div>
                 <div class="brand-info">
                     <span class="brand-text" style="color: white;">Campus <span class="brand-accent">Nexus</span></span>
-                    <span class="brand-subtext" style="color: var(--cosmic-text-muted);">ADIT · CVM University</span>
+                    <span class="brand-subtext" style="color: var(--cosmic-text-muted);">Innovation & Collaboration Hub</span>
                 </div>
             </a>
             <p class="footer-tagline">
                 The centralized student collaboration portal engineered for cross-departmental teaming, peer skill exchanges, innovation proposals, and workshop discovery.
             </p>
-
-            <!-- Institutional Partnership Display -->
-            <div class="footer-institution-strip">
-                <div class="inst-card">
-                    <img src="<?= htmlspecialchars($baseUrl) ?>/images/adit-logo.png" alt="ADIT Emblem" class="footer-inst-logo">
-                    <div>
-                        <strong style="color: white; font-size: 0.82rem; display: block;">A D Patel Institute of Technology</strong>
-                        <span style="font-size: 0.75rem; color: var(--cosmic-text-muted);">Constituent Engineering College</span>
-                    </div>
-                </div>
-                <div class="inst-card">
-                    <img src="<?= htmlspecialchars($baseUrl) ?>/images/cvm-university-logo.png" alt="CVM University Emblem" class="footer-inst-logo">
-                    <div>
-                        <strong style="color: white; font-size: 0.82rem; display: block;">CVM University</strong>
-                        <span style="font-size: 0.75rem; color: var(--cosmic-text-muted);">Charutar Vidya Mandal</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Column 2: Collaboration Links -->
@@ -82,19 +64,19 @@ if (!isset($baseUrl)) {
 
     </div>
 
-    <!-- Legal, Copyright & Academic Fair Use Section -->
+    <!-- Legal & Copyright Section -->
     <div class="footer-bottom">
         <div class="container footer-bottom-inner">
             <div style="font-size: 0.8rem; color: var(--cosmic-text-muted); line-height: 1.6; max-width: 820px;">
                 <p style="margin: 0 0 6px;">
-                    &copy; <?= date("Y") ?> <strong>Campus Nexus</strong>. Developed for academic collaboration and research at <strong>A D Patel Institute of Technology (ADIT)</strong>, a constituent college of <strong>CVM University</strong>.
+                    &copy; <?= date("Y") ?> <strong>Campus Nexus</strong>. The Next-Generation Student Collaboration & Innovation Platform.
                 </p>
                 <p style="margin: 0; font-size: 0.74rem; opacity: 0.8;">
-                    <strong>Academic Fair Use & Trademark Notice:</strong> Institutional logos and names are the intellectual property of Charutar Vidya Mandal (CVM) and A D Patel Institute of Technology (ADIT) and are utilized herein under Academic Fair Use for non-commercial educational demonstration. Built with 100% royalty-free, original code under the Open Source MIT License.
+                    Empowering students to connect, build cross-disciplinary projects, trade skills, and lead campus initiatives. Distributed under the Open Source MIT License.
                 </p>
             </div>
             <div class="footer-badges">
-                <span class="footer-status-pill">● System Online · ADIT Campus</span>
+                <span class="footer-status-pill">● System Online · Campus Hub</span>
                 <span class="footer-status-pill" style="background: rgba(99, 102, 241, 0.2); border-color: rgba(99, 102, 241, 0.4); color: #c7d2fe;">MIT License</span>
             </div>
         </div>

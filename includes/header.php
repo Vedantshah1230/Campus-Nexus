@@ -39,8 +39,8 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?= htmlspecialchars($pageTitle) ?> | Campus Nexus — ADIT & CVM University</title>
-    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? 'Campus Nexus – Student Collaboration Hub connecting ideas, projects, skills, and events at A D Patel Institute of Technology (ADIT), CVM University.') ?>">
+    <title><?= htmlspecialchars($pageTitle) ?> | Campus Nexus — Innovation & Collaboration Hub</title>
+    <meta name="description" content="<?= htmlspecialchars($pageDescription ?? 'Campus Nexus – Student Collaboration Hub connecting ideas, projects, skills, and campus workshops.') ?>">
 
     <!-- Official Favicon -->
     <link rel="icon" type="image/png" href="<?= htmlspecialchars($baseUrl) ?>/images/favicon.png">
@@ -53,23 +53,16 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
 <header class="topbar">
     <div class="topbar-inner">
 
-        <!-- Brand Identity with Official Logo & Institutional Tag -->
+        <!-- Brand Identity with Official Logo -->
         <a class="brand" href="<?= htmlspecialchars($baseUrl) ?>/public/index.php" aria-label="Campus Nexus Home">
             <div class="brand-logo-wrap">
                 <img src="<?= htmlspecialchars($baseUrl) ?>/images/cn-logo.png" alt="Campus Nexus Emblem" class="brand-logo-img">
             </div>
             <div class="brand-info">
                 <span class="brand-text">Campus <span class="brand-accent">Nexus</span></span>
-                <span class="brand-subtext">ADIT · CVM University</span>
+                <span class="brand-subtext">Innovation & Collaboration Hub</span>
             </div>
         </a>
-
-        <!-- Institutional Trust Badges (ADIT & CVM University) -->
-        <div class="topbar-affiliations" title="A D Patel Institute of Technology (ADIT) · CVM University">
-            <img src="<?= htmlspecialchars($baseUrl) ?>/images/adit-logo.png" alt="ADIT - A D Patel Institute of Technology" class="topbar-inst-logo">
-            <span class="inst-divider" aria-hidden="true"></span>
-            <img src="<?= htmlspecialchars($baseUrl) ?>/images/cvm-university-logo.png" alt="CVM University" class="topbar-inst-logo">
-        </div>
 
         <!-- Global Quick Search Trigger (Ctrl + K) -->
         <button class="quick-search-trigger" id="openCommandPalette" type="button" aria-label="Open Quick Search" title="Quick Search (Ctrl + K)">

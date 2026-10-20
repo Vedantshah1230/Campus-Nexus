@@ -1507,23 +1507,23 @@ textarea:focus {
    9. Brand Identity, Institutional Emblems & Command Palette
    -------------------------------------------------------------------------- */
 .brand-logo-wrap {
-    width: 36px;
-    height: 36px;
-    border-radius: 9px;
-    background: #070a13;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #050811;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.4);
-    border: 1px solid rgba(56, 189, 248, 0.4);
+    box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+    border: 1px solid rgba(56, 189, 248, 0.45);
     flex-shrink: 0;
 }
 
 .brand-logo-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .brand-info {
@@ -1753,12 +1753,12 @@ textarea:focus {
 }
 
 .hero-inst-img {
-    height: 28px;
+    height: 32px;
     width: auto;
     object-fit: contain;
-    border-radius: 4px;
-    background: white;
-    padding: 2px;
+    border-radius: 6px;
+    background: transparent;
+    padding: 0;
 }
 
 .hero-inst-text {

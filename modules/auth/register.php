@@ -125,16 +125,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
                 <div class="brand-info" style="text-align: left;">
                     <span class="brand-text">Campus <span class="brand-accent">Nexus</span></span>
-                    <span class="brand-subtext">ADIT · CVM University</span>
+                    <span class="brand-subtext">Innovation & Collaboration Hub</span>
                 </div>
             </a>
-
-            <!-- Institutional Affiliation Badge -->
-            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 4px 12px; background: var(--surface-muted); border: 1px solid var(--border); border-radius: var(--radius-full); margin: 6px 0 14px;">
-                <img src="../../images/adit-logo.png" alt="ADIT" style="height: 18px; width: auto;">
-                <span style="font-size: 0.72rem; font-weight: 700; color: var(--muted);">ADIT & CVM UNIVERSITY</span>
-                <img src="../../images/cvm-university-logo.png" alt="CVM" style="height: 18px; width: auto;">
-            </div>
 
             <h1 class="font-display" style="font-size: 1.8rem; margin: 4px 0 6px; color: var(--text-primary);">Join Campus Nexus</h1>
             <p class="auth-subtitle" style="color: var(--muted); margin: 0; font-size: 0.95rem;">

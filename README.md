@@ -1,15 +1,13 @@
 # 🎓 Campus Nexus — Student Collaboration Hub
-### *A D Patel Institute of Technology (ADIT) · CVM University*
+### *Student Innovation & Campus Teaming Network*
 
 [![PHP Version](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=flat&logo=php&logoColor=white)](https://www.php.net/)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-4479A1?style=flat&logo=mysql&logoColor=white)](https://www.mysql.com/)
 [![Frontend](https://img.shields.io/badge/UI-Vanilla%20CSS3%20%26%20JS-F16529?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![License](https://img.shields.io/badge/License-MIT%20Open%20Source-10B981?style=flat)](LICENSE)
-[![Institution](https://img.shields.io/badge/Institution-ADIT%20%7C%20CVM%20University-0284C7?style=flat)](https://www.adit.ac.in)
-[![Copyright Safety](https://img.shields.io/badge/Copyright%20Compliance-100%25%20Verified%20Fair%20Use-6366F1?style=flat)](#-copyright-compliance--legal-safety)
 
 > **"Your Campus. Your Ideas. Your Future."**  
-> An all-in-one, full-stack student collaboration platform engineered to break down academic silos across departments at **A D Patel Institute of Technology (ADIT)**, a constituent college of **Charutar Vidya Mandal (CVM) University**. Campus Nexus bridges project matchmaking, peer skill exchanges, campus proposals, event registration, and gamified achievement recognition.
+> An all-in-one, full-stack student collaboration platform engineered to break down academic silos across departments. Campus Nexus bridges project matchmaking, peer skill exchanges, campus proposals, event registration, and gamified achievement recognition.
 
 ---
 
@@ -330,21 +328,5 @@ Includes:
 
 ---
 
-## ⚖️ Copyright Compliance & Legal Safety
-
-To guarantee that the project encounters **zero copyright, trademark, or intellectual property infringements**, the repository operates under strict academic standards:
-
-1. **Academic Fair Use & Institutional Trademark Attribution:**  
-   - The emblems, logos, and names of **A D Patel Institute of Technology (ADIT)** and **Charutar Vidya Mandal (CVM) University** are the proprietary trademarks of their respective academic authorities.
-   - They are referenced strictly under the **Academic Fair Use** doctrine for non-commercial student innovation, educational presentation, and institutional community building.
-2. **Zero Third-Party Proprietary Media:**  
-   - All code is 100% original, authored from scratch in native PHP 8, Vanilla CSS3, and ES6 JavaScript.
-   - Zero unlicensed stock imagery or proprietary third-party libraries.
-   - Google Fonts (*Plus Jakarta Sans* and *Space Grotesk*) are distributed under the open-source **SIL Open Font License (OFL)**.
-3. **Open Source Licensing:**  
-   - The project code is released under the permissive [MIT License](LICENSE), allowing free educational use, peer review, and academic extension.
-
----
-
 ## 📄 License & Attribution
-Developed for educational research and student innovation at A D Patel Institute of Technology, CVM University. Built with standard open web technologies (PHP, MySQL, HTML5, CSS3, Vanilla JS). Distributed under the [MIT License](LICENSE).
+Developed for educational research and student innovation. Built with standard open web technologies (PHP, MySQL, HTML5, CSS3, Vanilla JS). Distributed under the [MIT License](LICENSE).
