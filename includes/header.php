@@ -50,6 +50,12 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
 </head>
 <body>
 
+<!-- Ambient Eye-Comfortable Luminous Aura Follower -->
+<div id="nexusAura" class="nexus-ambient-aura" aria-hidden="true"></div>
+
+<!-- Smooth Top Scroll Progress Bar -->
+<div id="scrollProgressBar" class="scroll-progress-bar" aria-hidden="true"></div>
+
 <header class="topbar">
     <div class="topbar-inner">
 

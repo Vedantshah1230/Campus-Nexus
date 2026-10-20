@@ -1727,7 +1727,7 @@ textarea:focus {
 }
 
 /* --------------------------------------------------------------------------
-   10. Hero Visual Enhancements, Mascot & Activity Ticker
+   10. Hero Visual Enhancements, 3D Synergy Core & Activity Ticker
    -------------------------------------------------------------------------- */
 .cosmic-canvas {
     position: absolute;
@@ -1790,59 +1790,529 @@ textarea:focus {
     }
 }
 
-.hero-mascot-card {
-    position: relative;
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.25);
-    background: #0b1120;
-    border: 1px solid rgba(56, 189, 248, 0.3);
-    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
-}
-
-.hero-mascot-card:hover {
-    transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 26px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(56, 189, 248, 0.4);
-}
-
-.mascot-img-wrap {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%;
-    overflow: hidden;
-}
-
-.mascot-img {
-    position: absolute;
+/* --------------------------------------------------------------------------
+   Scroll Progress Bar & Ambient Luminous Aura (Comfortable for Eyes)
+   -------------------------------------------------------------------------- */
+.scroll-progress-bar {
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s var(--ease-out);
+    height: 3px;
+    width: 0%;
+    background: linear-gradient(90deg, #38bdf8 0%, #6366f1 50%, #a855f7 100%);
+    z-index: 9999;
+    box-shadow: 0 0 12px rgba(56, 189, 248, 0.65);
+    transition: width 0.08s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
 }
 
-.hero-mascot-card:hover .mascot-img {
-    transform: scale(1.04);
+.nexus-ambient-aura {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 440px;
+    height: 440px;
+    margin-left: -220px;
+    margin-top: -220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.08) 0%, rgba(99, 102, 241, 0.04) 45%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+    transform: translate3d(-1000px, -1000px, 0);
+    filter: blur(40px);
+    will-change: transform;
+    opacity: 0.9;
 }
 
-.mascot-badge {
+/* --------------------------------------------------------------------------
+   Interactive 3D Nexus Holographic Synergy Core
+   -------------------------------------------------------------------------- */
+.hero-synergy-col {
+    position: relative;
+    perspective: 1200px;
+}
+
+.synergy-orb-station {
+    position: relative;
+    background: linear-gradient(145deg, rgba(11, 17, 32, 0.94) 0%, rgba(7, 10, 19, 0.98) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 24px 22px 20px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65), 0 0 45px rgba(56, 189, 248, 0.16);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    transition: transform 0.25s var(--ease-out), box-shadow 0.3s ease;
+}
+
+.synergy-orb-station:hover {
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.75), 0 0 55px rgba(99, 102, 241, 0.28);
+}
+
+.orb-ambient-glow {
     position: absolute;
-    bottom: 12px;
-    left: 12px;
-    right: 12px;
-    background: rgba(7, 10, 19, 0.85);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    border-radius: var(--radius-sm);
-    padding: 8px 14px;
+    top: -80px;
+    right: -80px;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, rgba(168, 85, 247, 0.12) 50%, transparent 70%);
+    filter: blur(35px);
+    pointer-events: none;
+}
+
+.synergy-station-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 14px;
+    position: relative;
+    z-index: 3;
+}
+
+.synergy-station-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 12px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-full);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--electric-blue);
+    letter-spacing: 0.03em;
+}
+
+.live-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px #10b981;
+    animation: liveDotPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes liveDotPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+.synergy-badge-count {
+    font-size: 0.78rem;
+    color: var(--cosmic-text-muted);
+    font-weight: 600;
+}
+
+/* 3D Orbital Reactor Stage */
+.synergy-reactor-stage {
+    position: relative;
+    width: 100%;
+    height: 290px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 8px 0 16px;
+}
+
+.orbital-ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.ring-outer {
+    width: 270px;
+    height: 270px;
+    border: 1px dashed rgba(56, 189, 248, 0.22);
+    animation: orbitSpinClockwise 32s linear infinite;
+}
+
+.ring-middle {
+    width: 200px;
+    height: 200px;
+    border: 1px dotted rgba(168, 85, 247, 0.28);
+    animation: orbitSpinCounter 24s linear infinite;
+}
+
+.ring-inner {
+    width: 130px;
+    height: 130px;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    box-shadow: inset 0 0 15px rgba(56, 189, 248, 0.12);
+    animation: orbitSpinClockwise 16s linear infinite;
+}
+
+@keyframes orbitSpinClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes orbitSpinCounter {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+/* Reactor Core with 3D Logo */
+.reactor-core {
+    position: relative;
+    width: 76px;
+    height: 76px;
+    border-radius: 20px;
+    background: #050811;
+    border: 1.5px solid rgba(56, 189, 248, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.45), 0 0 50px rgba(99, 102, 241, 0.25);
+    z-index: 4;
+    animation: corePulse 3.5s ease-in-out infinite;
+}
+
+@keyframes corePulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), 0 0 45px rgba(99, 102, 241, 0.2);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 38px rgba(56, 189, 248, 0.65), 0 0 60px rgba(168, 85, 247, 0.35);
+    }
+}
+
+.core-logo-halo {
+    position: absolute;
+    inset: -6px;
+    border-radius: 24px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.35) 0%, transparent 70%);
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+.core-logo-img {
+    width: 58px;
+    height: 58px;
+    object-fit: contain;
+    position: relative;
+    z-index: 2;
+}
+
+/* Orbiting Interactive Pods */
+.orbital-pod {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 12px;
+    background: rgba(16, 25, 46, 0.88);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4), 0 0 14px rgba(56, 189, 248, 0.18);
+    z-index: 5;
+    transition: transform 0.35s var(--ease-out), border-color 0.25s ease, opacity 0.3s ease;
+    cursor: pointer;
+}
+
+.orbital-pod:hover {
+    transform: scale(1.06) translateY(-2px);
+    border-color: var(--electric-blue);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 22px rgba(56, 189, 248, 0.4);
+}
+
+.pod-icon {
+    font-size: 1.15rem;
+}
+
+.pod-info {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    line-height: 1.2;
+}
+
+.pod-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--cosmic-text-high);
+}
+
+.pod-sub {
+    font-size: 0.68rem;
+    color: var(--electric-blue);
+}
+
+.pod-1 {
+    top: 14px;
+    left: 8px;
+    animation: podFloat1 5s ease-in-out infinite alternate;
+}
+
+.pod-2 {
+    bottom: 22px;
+    left: 12px;
+    animation: podFloat2 6s ease-in-out infinite alternate;
+}
+
+.pod-3 {
+    top: 26px;
+    right: 8px;
+    animation: podFloat3 5.5s ease-in-out infinite alternate;
+}
+
+.pod-4 {
+    bottom: 18px;
+    right: 12px;
+    animation: podFloat4 6.5s ease-in-out infinite alternate;
+}
+
+@keyframes podFloat1 { 0% { transform: translate(0, 0); } 100% { transform: translate(4px, -6px); } }
+@keyframes podFloat2 { 0% { transform: translate(0, 0); } 100% { transform: translate(-5px, 5px); } }
+@keyframes podFloat3 { 0% { transform: translate(0, 0); } 100% { transform: translate(-4px, -5px); } }
+@keyframes podFloat4 { 0% { transform: translate(0, 0); } 100% { transform: translate(6px, 4px); } }
+
+/* Synergy Controls (Tabs) */
+.synergy-controls {
+    display: flex;
+    gap: 6px;
+    background: rgba(7, 10, 19, 0.65);
+    border: 1px solid rgba(56, 189, 248, 0.15);
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 14px;
+}
+
+.synergy-tab {
+    flex: 1;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--cosmic-text-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+    padding: 6px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.synergy-tab:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.synergy-tab.active {
+    background: rgba(56, 189, 248, 0.16);
+    border-color: rgba(56, 189, 248, 0.4);
+    color: white;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+/* Station Metrics Footer */
+.synergy-station-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-top: 12px;
+    border-top: 1px solid rgba(56, 189, 248, 0.15);
+    text-align: center;
+}
+
+.station-metric {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-num {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.metric-desc {
+    font-size: 0.68rem;
+    color: var(--cosmic-text-muted);
+    margin-top: 2px;
+}
+
+.station-metric-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Live Innovation Radar Frame (Section 6)
+   -------------------------------------------------------------------------- */
+.innovation-radar-frame {
+    background: linear-gradient(145deg, #070a13 0%, #0d1527 100%);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    border-radius: var(--radius-xl);
+    padding: 24px 28px;
+    box-shadow: var(--shadow-cosmic);
+    margin-bottom: 36px;
+    overflow: hidden;
+    position: relative;
+}
+
+.radar-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+    margin-bottom: 20px;
+}
+
+.radar-live-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     font-size: 0.82rem;
     font-weight: 700;
     color: var(--electric-blue);
+    letter-spacing: 0.02em;
+}
+
+.radar-stats-tags {
+    display: flex;
+    gap: 10px;
+}
+
+.radar-tag {
+    font-size: 0.76rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #cbd5e1;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+}
+
+.radar-tag strong {
+    color: #38bdf8;
+}
+
+.radar-grid-display {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+@media (max-width: 820px) {
+    .radar-grid-display {
+        grid-template-columns: 1fr;
+    }
+}
+
+.radar-panel {
+    background: rgba(16, 25, 46, 0.6);
+    border: 1px solid rgba(56, 189, 248, 0.18);
+    border-radius: var(--radius-md);
+    padding: 18px;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.panel-icon {
+    font-size: 1.3rem;
+}
+
+.synergy-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.synergy-bar-item .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #e2e8f0;
+    margin-bottom: 6px;
+}
+
+.bar-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bar-fill-1 {
+    width: 98%;
+    background: linear-gradient(90deg, #38bdf8, #0284c7);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+}
+
+.bar-fill-2 {
+    width: 94%;
+    background: linear-gradient(90deg, #a855f7, #6366f1);
+    box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.bar-fill-3 {
+    width: 91%;
+    background: linear-gradient(90deg, #10b981, #059669);
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.radar-stream-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stream-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stream-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.stream-dot-green { background: #10b981; box-shadow: 0 0 8px #10b981; }
+.stream-dot-cyan { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
+.stream-dot-purple { background: #a855f7; box-shadow: 0 0 8px #a855f7; }
+
+.stream-text {
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    display: flex;
+    flex-direction: column;
+}
+
+.stream-text strong {
+    color: white;
+}
+
+.stream-time {
+    font-size: 0.7rem;
+    color: var(--cosmic-text-muted);
 }
 
 /* Live Activity Ticker ("Nexus Pulse") */
@@ -1953,32 +2423,7 @@ textarea:focus {
     font-weight: 700;
 }
 
-/* Institutional Footer Strip */
-.footer-institution-strip {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 18px;
-}
-
-.inst-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 8px 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-sm);
-}
-
-.footer-inst-logo {
-    height: 32px;
-    width: auto;
-    object-fit: contain;
-    border-radius: 4px;
-    background: white;
-    padding: 2px;
-}
+/* Cleaned institutional footer styles */
 
 /* --------------------------------------------------------------------------
    11. Accessibility & Prefers-Reduced-Motion

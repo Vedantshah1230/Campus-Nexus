@@ -224,7 +224,114 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /*
     |--------------------------------------------------------------------------
-    | 5. Cosmic Celestial Particle Canvas
+    | 5. Ambient Eye-Comfortable Aura & Scroll Progress Tracker
+    |--------------------------------------------------------------------------
+    */
+    const aura = document.getElementById('nexusAura');
+    if (aura && !prefersReducedMotion) {
+        let currentX = -1000, currentY = -1000;
+        let targetX = -1000, targetY = -1000;
+
+        window.addEventListener('mousemove', (e) => {
+            targetX = e.clientX;
+            targetY = e.clientY;
+        }, { passive: true });
+
+        const updateAura = () => {
+            currentX += (targetX - currentX) * 0.1;
+            currentY += (targetY - currentY) * 0.1;
+            aura.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+            requestAnimationFrame(updateAura);
+        };
+        updateAura();
+    }
+
+    const progressBar = document.getElementById('scrollProgressBar');
+    if (progressBar) {
+        window.addEventListener('scroll', () => {
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = maxScroll > 0 ? (window.scrollY / maxScroll) * 100 : 0;
+            progressBar.style.width = `${progress}%`;
+        }, { passive: true });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 6. Ultra-Smooth 3D Card Tilt Physics ([data-tilt])
+    |--------------------------------------------------------------------------
+    */
+    if (!prefersReducedMotion) {
+        document.querySelectorAll('[data-tilt]').forEach((card) => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -6;
+                const rotateY = ((x - centerX) / centerX) * 6;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.015, 1.015, 1.015)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 7. Interactive Synergy Station Reactor Controller
+    |--------------------------------------------------------------------------
+    */
+    const synergyStation = document.getElementById('synergyStation');
+    if (synergyStation) {
+        const tabs = synergyStation.querySelectorAll('.synergy-tab');
+        const pods = synergyStation.querySelectorAll('.orbital-pod');
+        const activeNodesCount = document.getElementById('activeNodesCount');
+        const metricMatch = document.getElementById('metricMatch');
+        const metricHours = document.getElementById('metricHours');
+        const metricXp = document.getElementById('metricXp');
+
+        const modeConfig = {
+            all: { count: '4', match: '98%', speed: 'Instant', xp: '+50 XP' },
+            projects: { count: '2', match: '96%', speed: '5 mins', xp: '+60 XP' },
+            skills: { count: '1', match: '99%', speed: 'Direct', xp: '+40 XP' },
+            ideas: { count: '1', match: '92%', speed: 'Trending', xp: '+30 XP' }
+        };
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const mode = tab.getAttribute('data-mode');
+
+                pods.forEach(pod => {
+                    const category = pod.getAttribute('data-category');
+                    if (mode === 'all' || category === mode) {
+                        pod.style.opacity = '1';
+                        pod.style.transform = 'scale(1)';
+                        pod.style.pointerEvents = 'auto';
+                    } else {
+                        pod.style.opacity = '0.22';
+                        pod.style.transform = 'scale(0.92)';
+                        pod.style.pointerEvents = 'none';
+                    }
+                });
+
+                if (modeConfig[mode]) {
+                    if (activeNodesCount) activeNodesCount.textContent = modeConfig[mode].count;
+                    if (metricMatch) metricMatch.textContent = modeConfig[mode].match;
+                    if (metricHours) metricHours.textContent = modeConfig[mode].speed;
+                    if (metricXp) metricXp.textContent = modeConfig[mode].xp;
+                }
+            });
+        });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 8. Cosmic Celestial Particle Canvas with Gravity Well & Ripple Physics
     |--------------------------------------------------------------------------
     */
     const canvas = document.getElementById('cosmicCanvas');
@@ -232,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ctx = canvas.getContext('2d');
         let width, height;
         let particles = [];
+        let shockwaves = [];
         let mouseX = -1000, mouseY = -1000;
 
         const resize = () => {
@@ -242,40 +350,80 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         resize();
-        window.addEventListener('resize', resize);
+        window.addEventListener('resize', resize, { passive: true });
 
         canvas.parentElement.addEventListener('mousemove', (e) => {
             const rect = canvas.getBoundingClientRect();
             mouseX = e.clientX - rect.left;
             mouseY = e.clientY - rect.top;
-        });
+        }, { passive: true });
 
         canvas.parentElement.addEventListener('mouseleave', () => {
             mouseX = -1000;
             mouseY = -1000;
         });
 
-        const particleCount = Math.min(50, Math.floor((width * height) / 18000));
+        // Click creates a soft cosmic shockwave
+        canvas.parentElement.addEventListener('click', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            shockwaves.push({
+                x: e.clientX - rect.left,
+                y: e.clientY - rect.top,
+                radius: 5,
+                maxRadius: 160,
+                alpha: 0.5
+            });
+        });
+
+        const particleCount = Math.min(55, Math.floor((width * height) / 16000));
 
         for (let i = 0; i < particleCount; i++) {
             particles.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.45,
-                vy: (Math.random() - 0.5) * 0.45,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
                 radius: Math.random() * 1.8 + 0.6,
                 color: Math.random() > 0.4 ? 'rgba(56, 189, 248, ' : 'rgba(168, 85, 247, ',
-                alpha: Math.random() * 0.6 + 0.2,
-                alphaSpeed: (Math.random() * 0.015 + 0.005) * (Math.random() > 0.5 ? 1 : -1)
+                alpha: Math.random() * 0.5 + 0.2,
+                alphaSpeed: (Math.random() * 0.012 + 0.004) * (Math.random() > 0.5 ? 1 : -1)
             });
         }
 
-        let animationFrameId;
         const render = () => {
             ctx.clearRect(0, 0, width, height);
 
+            // Render shockwaves
+            for (let s = shockwaves.length - 1; s >= 0; s--) {
+                const sw = shockwaves[s];
+                sw.radius += 3.5;
+                sw.alpha *= 0.94;
+
+                ctx.beginPath();
+                ctx.arc(sw.x, sw.y, sw.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(56, 189, 248, ${sw.alpha * 0.4})`;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                if (sw.alpha < 0.02 || sw.radius > sw.maxRadius) {
+                    shockwaves.splice(s, 1);
+                }
+            }
+
             for (let i = 0; i < particles.length; i++) {
                 const p = particles[i];
+
+                // Mouse Gravity Well (soft pull towards cursor, comfortable on eyes)
+                if (mouseX > 0 && mouseY > 0) {
+                    const dx = mouseX - p.x;
+                    const dy = mouseY - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 130 && dist > 10) {
+                        const force = (1 - dist / 130) * 0.35;
+                        p.x += (dx / dist) * force;
+                        p.y += (dy / dist) * force;
+                    }
+                }
 
                 p.x += p.vx;
                 p.y += p.vy;
@@ -286,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (p.y > height) p.y = 0;
 
                 p.alpha += p.alphaSpeed;
-                if (p.alpha > 0.85 || p.alpha < 0.15) {
+                if (p.alpha > 0.8 || p.alpha < 0.15) {
                     p.alphaSpeed = -p.alphaSpeed;
                 }
 
@@ -295,25 +443,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fillStyle = p.color + p.alpha + ')';
                 ctx.fill();
 
-                // Gentle connection lines
+                // Gentle constellation connection lines
                 for (let j = i + 1; j < particles.length; j++) {
                     const p2 = particles[j];
                     const dx = p.x - p2.x;
                     const dy = p.y - p2.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 100) {
+                    if (dist < 110) {
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
                         ctx.lineTo(p2.x, p2.y);
-                        ctx.strokeStyle = `rgba(56, 189, 248, ${(1 - dist / 100) * 0.14})`;
+                        ctx.strokeStyle = `rgba(56, 189, 248, ${(1 - dist / 110) * 0.16})`;
                         ctx.lineWidth = 0.75;
                         ctx.stroke();
                     }
                 }
             }
 
-            animationFrameId = requestAnimationFrame(render);
+            requestAnimationFrame(render);
         };
 
         render();
@@ -321,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /*
     |--------------------------------------------------------------------------
-    | 6. Interactive Skill-Compatibility Simulator (Sandbox)
+    | 9. Interactive Skill-Compatibility Simulator (Sandbox)
     |--------------------------------------------------------------------------
     */
     const sandboxChips = document.querySelectorAll('.sandbox-chip');
@@ -330,7 +478,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sandboxFeedbackEl = document.getElementById('sandboxFeedback');
 
     if (sandboxChips.length > 0 && sandboxPercentEl && sandboxProgressRing) {
-        // Target project requires: Python, Machine Learning, ROS2, C++
         const targetProjectSkills = ['python', 'machine learning', 'c++', 'robotics'];
 
         const updateSandbox = () => {
@@ -340,12 +487,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const matchedSkills = targetProjectSkills.filter(s => activeSkills.includes(s));
             const matchPercent = Math.round((matchedSkills.length / targetProjectSkills.length) * 100);
 
-            // Animate stroke dashoffset (circumference: 2 * PI * 40 = 251.3)
             const circumference = 251.3;
             const offset = circumference - (matchPercent / 100) * circumference;
             sandboxProgressRing.style.strokeDashoffset = offset;
-
-            // Animate number count-up
             sandboxPercentEl.textContent = `${matchPercent}%`;
 
             if (matchPercent === 100) {
