@@ -38,10 +38,11 @@ $requireSsl  = !empty($sslCa)
 $flags = 0;
 
 if ($requireSsl) {
-    // Determine the CA certificate path (use custom CA, or system bundle if present)
+    // Determine the CA certificate path (use custom CA, local bundle, or system bundle)
     $caPath = $sslCa;
     if (!$caPath) {
         $candidatePaths = [
+            __DIR__ . '/isrgrootx1.pem',          // Project-bundled TiDB / Let's Encrypt CA root
             '/etc/ssl/certs/ca-certificates.crt', // Debian / Ubuntu / Render Linux
             '/etc/pki/tls/certs/ca-bundle.crt',   // RHEL / CentOS
             '/etc/ssl/ca-bundle.pem',             // OpenSUSE / Alpine

@@ -5,9 +5,10 @@
 # database/ are also blocked in api/index.php at the router level
 # for defence-in-depth.
 
-# Never serve PHP config files as static downloads
+# Never serve PHP config files or certs as static downloads
 config/database.php
 config/database.example.php
+config/*.pem
 
 # Never serve raw SQL schema files
 database/*.sql

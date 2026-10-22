@@ -6,6 +6,10 @@
 .env
 .env.*
 !.env.example
+*.key
+*.p12
+*.pfx
+!config/isrgrootx1.pem
 
 # Server & Application Logs
 *.log
