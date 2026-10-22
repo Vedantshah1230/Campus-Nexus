@@ -1,0 +1,22 @@
+# Vercel deployment exclusions for Campus Nexus
+#
+# These files are excluded from Vercel's CDN edge cache and
+# will NOT be served as static files. PHP files in config/ and
+# database/ are also blocked in api/index.php at the router level
+# for defence-in-depth.
+
+# Never serve PHP config files as static downloads
+config/database.php
+config/database.example.php
+
+# Never serve raw SQL schema files
+database/*.sql
+
+# Development / local-only files
+Dockerfile
+.dockerignore
+public/test-db.php
+public/test-users.php
+
+# Version control metadata
+.git/
