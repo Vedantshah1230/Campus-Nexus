@@ -1,82 +1,104 @@
 # 🎓 Campus Nexus — Student Collaboration Hub
-### *Student Innovation & Campus Teaming Network*
+### *Student Innovation, Teaming & Peer Mentorship Platform*
 
-[![PHP Version](https://img.shields.io/badge/PHP-8.0%2B-777BB4?style=flat&logo=php&logoColor=white)](https://www.php.net/)
+[![Live Demo](https://img.shields.io/badge/Production-Live%20on%20Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)](https://campus-nexus-1dc2.onrender.com)
+[![PHP](https://img.shields.io/badge/PHP-8.2-777BB4?style=flat&logo=php&logoColor=white)](https://www.php.net/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=flat&logo=docker&logoColor=white)](Dockerfile)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-4479A1?style=flat&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Frontend](https://img.shields.io/badge/UI-Vanilla%20CSS3%20%26%20JS-F16529?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
-[![License](https://img.shields.io/badge/License-MIT%20Open%20Source-10B981?style=flat)](LICENSE)
+[![Render](https://img.shields.io/badge/Host-Render%20Web%20Service-46E3B7?style=flat&logo=render&logoColor=white)](https://render.com)
+[![Frontend](https://img.shields.io/badge/UI-Vanilla%20CSS3%20%26%20JS-F16529?style=flat&logo=css3&logoColor=white)](css/style.css)
+[![License](https://img.shields.io/badge/License-MIT-10B981?style=flat)](LICENSE)
 
-> **"Your Campus. Your Ideas. Your Future."**  
-> An all-in-one, full-stack student collaboration platform engineered to break down academic silos across departments. Campus Nexus bridges project matchmaking, peer skill exchanges, campus proposals, event registration, and gamified achievement recognition.
+> 🚀 **Live Production Deployment:** [https://campus-nexus-1dc2.onrender.com](https://campus-nexus-1dc2.onrender.com)  
+> *"Your Campus. Your Ideas. Your Future."* — An all-in-one, full-stack student collaboration platform engineered to break down academic silos across university departments.
 
 ---
 
 ## 📌 Table of Contents
-- [Problem Statement & Solution](#-problem-statement--solution)
+- [Live Demo & Quick Links](#-live-demo--quick-links)
+- [System Overview & Architecture](#-system-overview--architecture)
 - [Key Features & Modules](#-key-features--modules)
 - [Design Aesthetics & Visual Identity](#-design-aesthetics--visual-identity)
 - [Technology Stack](#-technology-stack)
 - [Database Schema & Architecture](#-database-schema--architecture)
+- [Environment Variables](#-environment-variables)
 - [Project Directory Structure](#-project-directory-structure)
-- [Installation & Local Setup](#-installation--local-setup)
+- [Cloud Deployment (Render)](#-cloud-deployment-render)
+- [Local Development & Docker Setup](#-local-development--docker-setup)
 - [Security Implementation](#-security-implementation)
 - [Manual Testing Checklist](#-manual-testing-checklist)
-- [Git Repository Setup Guide](#-git-repository-setup-guide)
-- [Known Limitations & Future Roadmap](#-known-limitations--future-roadmap)
+- [Roadmap & Future Enhancements](#-roadmap--future-enhancements)
+- [License](#-license)
 
 ---
 
-## 💡 Problem Statement & Solution
+## 🌐 Live Demo & Quick Links
 
-### The Fragmented Campus Problem
-In universities and colleges today, student collaboration is notoriously scattered across disjointed WhatsApp groups, Discord servers, buried Slack channels, and physical notice boards. Students with technical skills lack avenues to teach peers; innovators struggle to discover complementary teammates for hackathons; and campus workshops suffer from unorganized registration workflows.
+| Resource | Link / Details |
+|---|---|
+| **Production URL** | [https://campus-nexus-1dc2.onrender.com](https://campus-nexus-1dc2.onrender.com) |
+| **Hosting Platform** | [Render](https://render.com) (Containerized via Docker on Linux) |
+| **Runtime Environment** | Apache 2.4 + PHP 8.2 (`php:8.2-apache`) |
+| **Database Engine** | Cloud MySQL 8.0 with InnoDB Storage Engine |
+| **Source Repository** | [github.com/Vedantshah1230/Campus-Nexus](https://github.com/Vedantshah1230/Campus-Nexus) |
+
+---
+
+## 💡 System Overview & Architecture
+
+### The Academic Silo Problem
+In higher education institutions, student innovation is fragmented across chaotic WhatsApp groups, buried Discord channels, unread emails, and physical notice boards:
+- Engineering students lack UI/UX designers or data analysts for hackathons.
+- Students proficient in niche frameworks lack an organized way to mentor peers.
+- Student initiatives and campus workshops struggle with manual seat registration and communication.
 
 ### The Nexus Solution
-**Campus Nexus** unifies student academic and extracurricular life into a single cohesive, high-performance web platform:
-1. **Algorithmic Team Finder:** Calculates real-time skill-compatibility percentages between prospective teammates and project requirements.
-2. **Peer Skill Marketplace:** Enables students to offer mentorship in specific technologies and exchange requests with fellow peers.
-3. **Open Idea Board:** A democratic student proposal forum with vote tracking, category filters, and anti-self-vote server guards.
-4. **Interactive Event Discovery:** Campus workshop discovery with real-time seat availability countdowns, registration caps, and status badges.
+**Campus Nexus** bridges university departments into a centralized, high-performance web ecosystem:
+1. **Algorithmic Team Matchmaking:** Calculates real-time skill-compatibility percentages between applicants and project technical requirements.
+2. **Peer-to-Peer Skill Exchange:** Students offer mentorship in specific technologies and exchange 1-on-1 coaching requests.
+3. **Democratic Campus Idea Board:** Transparent student proposal forum with vote tracking, category filters, and anti-self-vote server guards.
+4. **Workshop & Event Discovery:** Real-time seat availability countdowns, registration caps, and status tracking.
 5. **Idempotent Gamification:** Action-triggered points and achievement badges, complete with a campus leaderboard and podium spotlight.
+6. **Institutional Identity Portal:** Dual-identifier authentication (Institutional Email or Roll Number) paired with an immutable security audit log (`auth_logs`).
 
 ---
 
 ## 🚀 Key Features & Modules
 
-### 1. Animated Landing Page (`public/index.php`)
-- **Cosmic Space Hero:** Deep cosmic navy canvas (`#070a13`), atmospheric planetary radial glows, glowing typography, and floating interactive preview cards.
+### 1. Animated Cosmic Landing Page (`public/index.php`)
+- **Celestial Canvas & Ambient Halo:** Deep cosmic navy canvas (`#070a13`), dynamic interactive particle stars, and smooth atmospheric radial glows.
 - **Problem vs. Solution Matrix:** Compares fragmented college communication with the structured Nexus workflow.
-- **Interactive Match Simulator:** Live visual demonstration showing how skill-compatibility scores are computed.
-- **Workflow & Gamification Teasers:** Visual previews of the 4-step collaboration loop and unlockable badges.
+- **Interactive Match Simulator:** Live visual widget demonstrating how skill-compatibility scores are computed.
+- **Gamification Showcase:** Previews unlockable badges and platform telemetry.
 
 ### 2. High-Density Unified Dashboard (`public/dashboard.php`)
 - **Aggregated Metric Cards:** 8 real-time student statistics computed in a single optimized relational query:
-  - Total Points ⭐
+  - Total Experience Points ⭐
   - Badges Unlocked 🏆
   - Projects Created & Joined 🚀
   - Pending Incoming Team Requests 📬
   - Skill Offers & Requests 🤝
-  - Registered Upcoming Events 📅
-- **Quick-Action Panel:** One-click shortcuts to launch projects, post ideas, offer skills, or browse events.
+  - Registered Upcoming Workshops 📅
+- **Quick-Action Panel:** Instant shortcuts to launch projects, post ideas, offer mentorship, or browse events.
 
 ### 3. Student Profile & Skill Matrix (`modules/students/`)
-- **Academic Profile Management:** Department, semester, bio, and student initials avatar.
-- **Skill Proficiency Tracker:** Categorized skill tagging (`Web Development`, `Programming`, `Database`, `Design`, `Security`) with proficiency levels (`Beginner`, `Intermediate`, `Advanced`, `Expert`) backed by `ON DUPLICATE KEY UPDATE` queries.
+- **Institutional Identity:** Department, semester, roll number, bio, and student initials avatar.
+- **Skill Proficiency Matrix:** Standardized skill catalog (`Web Development`, `Programming`, `Database`, `Design`, `Security`) with proficiency levels (`Beginner`, `Intermediate`, `Advanced`, `Expert`).
 - **Interests Matrix:** Transaction-guarded multi-select interest chips for personalized discovery.
 
 ### 4. Team Finder & Matchmaking (`modules/projects/`)
-- **Compatibility Scoring:** Evaluates the student's logged skills against project required skills:
+- **Compatibility Scoring:** Evaluates the student's logged skills against project requirements:
   $$\text{Match } \% = \left(\frac{\text{Matching Skills Count}}{\text{Total Required Skills Count}}\right) \times 100$$
-- **Request Lifecycle:** Students can request to join teams; project owners can review applicants, inspect their matched skills, and accept or reject with idempotent database transactions.
+- **Request Lifecycle:** Students apply to teams; project owners review applicants, inspect matched skills, and accept or reject with idempotent database transactions.
 
 ### 5. Peer Skill Exchange (`modules/skills/`)
 - **Skill Offerings:** Students publish topics they are willing to teach or mentor.
-- **Mentorship Requests:** Other students can request 1-on-1 assistance with custom messages.
-- **Ownership Security:** Students cannot request help on their own offers; only the offering owner can accept/reject.
+- **Mentorship Requests:** Peers request 1-on-1 assistance with custom messages and contact preferences.
+- **Ownership Security:** Students cannot request mentorship on their own offers; only the offering owner can accept/reject.
 
 ### 6. Campus Idea Board (`modules/ideas/`)
 - **Democratic Proposals:** Students pitch projects, campus initiatives, and research ideas.
-- **Search & Sort:** Filter proposals by search query, category, vote count (Most Popular), or creation date (Newest).
+- **Search & Sort:** Filter proposals by search query, category, vote count (*Most Popular*), or creation date (*Newest*).
 - **Anti-Tamper Voting:** Server-side verification preventing double-voting and self-voting on owned ideas.
 
 ### 7. Campus Events Discovery (`modules/events/`)
@@ -87,7 +109,11 @@ In universities and colleges today, student collaboration is notoriously scatter
 ### 8. Gamification & Leaderboard (`modules/gamification/`)
 - **Verifiable Badges:** `First Project`, `Team Builder`, `Skill Sharer`, `Idea Contributor`, and `Event Explorer`.
 - **Top 3 Podium Spotlight:** Visual gold (🥇), silver (🥈), and bronze (🥉) rankings highlighting top student contributors.
-- **Inclusive Leaderboard:** Full campus standings including students starting with zero points.
+- **Campus Leaderboard:** Full campus standings including students starting with zero points.
+
+### 9. Institutional Security & Audit Trail (`modules/auth/`)
+- **Dual Identifier Login:** Students can authenticate using either their institutional email or their assigned university roll number.
+- **Security Audit Telemetry:** Every authentication event (`LOGIN_SUCCESS`, `LOGIN_FAILED`, `REGISTRATION`, `LOGOUT`) logs user ID, IP address, user agent, and timestamp to `auth_logs`.
 
 ---
 
@@ -99,7 +125,7 @@ Campus Nexus employs a cohesive synthesis of modern web aesthetics:
 - **Modern Clean Slate:** (`--background: #f8fafc`, `--surface: #ffffff`) ensures optimal readability and data density in dashboard views.
 - **Typography:** Google Fonts pairing of **Plus Jakarta Sans** (clean, legible body copy) and **Space Grotesk** (tech-forward display headings).
 - **Micro-Interactions:** Pure CSS subtle hover elevations, smooth transitions (`cubic-bezier(0.16, 1, 0.3, 1)`), and native `IntersectionObserver` scroll reveals.
-- **Accessibility:** Full keyboard navigability, clear focus rings (`0 0 0 3px rgba(79, 70, 229, 0.18)`), and complete respect for `@media (prefers-reduced-motion: reduce)`.
+- **Accessibility:** Full keyboard navigability, clear focus rings, and complete respect for `@media (prefers-reduced-motion: reduce)`.
 
 ---
 
@@ -107,19 +133,20 @@ Campus Nexus employs a cohesive synthesis of modern web aesthetics:
 
 | Layer | Technology | Details |
 |---|---|---|
-| **Backend Runtime** | PHP 8.0+ | Native PHP without heavy frameworks; clean procedural/modular OOP architecture. |
-| **Database** | MySQL 8.0+ / MariaDB | Relational InnoDB storage engine, foreign keys, cascading deletes, unique constraints. |
-| **Frontend Structure** | HTML5 | Semantic markup (`<main>`, `<nav>`, `<article>`, `<section>`, `<header>`, `<footer>`). |
+| **Hosting Platform** | [Render](https://render.com) | Linux containerized Web Service with automated GitHub CI/CD deployments. |
+| **Container Engine** | Docker | Multi-stage Apache + PHP 8.2 image with `mod_rewrite` enabled. |
+| **Backend Runtime** | PHP 8.2 | Native, high-performance PHP without heavy framework overhead. |
+| **Database** | MySQL 8.0 / MariaDB | Relational InnoDB storage engine, foreign keys, cascading deletes, unique constraints. |
+| **Frontend Structure** | HTML5 | Clean semantic markup (`<main>`, `<nav>`, `<article>`, `<section>`, `<header>`, `<footer>`). |
 | **Frontend Styling** | Vanilla CSS3 | Custom Properties (CSS variables), CSS Grid, Flexbox, zero Tailwind/Bootstrap dependencies. |
-| **Client Scripting** | Vanilla JavaScript (ES6+) | No jQuery or React; native DOM manipulation, ARIA attributes, and `IntersectionObserver`. |
-| **Session & Auth** | PHP Native Sessions | Cookie security flags, session fixation protection, flash message bus. |
-| **Server Compatibility** | Apache / Nginx / XAMPP | Dynamic `$baseUrl` resolution; supports root or arbitrary nested subfolder hosting. |
+| **Client Scripting** | Vanilla JavaScript (ES6+) | Native DOM manipulation, custom canvas animation, ARIA attributes, and `IntersectionObserver`. |
+| **Session & Auth** | PHP Native Sessions | Cookie security flags, session fixation protection, flash message bus, institutional audit trail. |
 
 ---
 
 ## 🗄 Database Schema & Architecture
 
-The system database is named `campus_nexus` and consists of **18 interconnected relational tables**:
+The system database consists of **19 interconnected relational tables**:
 
 ```mermaid
 erDiagram
@@ -146,10 +173,11 @@ erDiagram
     users ||--o{ user_badges : "earns"
     badges ||--o{ user_badges : "awards"
     users ||--o| user_points : "accumulates"
+    users ||--o{ auth_logs : "audits"
 ```
 
 ### Table Summary:
-1. `users` — Student accounts, email, role (`student`, `admin`), `last_login_at`, and password hashes.
+1. `users` — Student accounts, email, role (`student`, `admin`), `last_login_at`, and bcrypt password hashes.
 2. `student_profiles` — Academic metadata (department, semester, `roll_number`, bio, avatar).
 3. `skills` — Standardized skill taxonomy with categories.
 4. `user_skills` — Pivot table storing student skills and proficiency rankings.
@@ -171,19 +199,43 @@ erDiagram
 
 ---
 
+## ⚙️ Environment Variables
+
+Campus Nexus dynamically loads database and server configuration via environment variables ([config/database.php](config/database.php)), falling back to local defaults if unspecified:
+
+| Variable | Description | Default | Production Example (Render) |
+|---|---|---|---|
+| `DB_HOST` | MySQL database host / hostname | `localhost` | `gateway01.us-east-1.prod.aws.tidbcloud.com` |
+| `DB_PORT` | MySQL database connection port | `3306` | `4000` (or `3306`) |
+| `DB_NAME` | Database schema name | `campus_nexus` | `campus_nexus` |
+| `DB_USER` | MySQL database user | `root` | `xxxxxx.root` |
+| `DB_PASS` | MySQL database password | `123456` | *(Strong generated secret)* |
+| `DB_SSL_CA` | Optional CA certificate file path for TLS/SSL | `null` | `/etc/ssl/certs/ca-certificates.crt` |
+| `PORT` | Web server listening port for routing | `80` | `80` |
+
+---
+
 ## 📁 Project Directory Structure
 
 ```
-campus-nexus/Campus-Nexus/
-├── .gitignore                      # Git exclusion rules for clean repository
-├── README.md                       # Complete project documentation
+Campus-Nexus/
+├── .dockerignore                   # Docker build exclusions
+├── .gitignore                      # Git exclusion rules
+├── Dockerfile                      # Production container spec (PHP 8.2 + Apache)
+├── LICENSE                         # MIT License
+├── README.md                       # Master documentation & deployment guide
+├── index.php                       # Root request handler (redirects to public/)
+├── vercel.json                     # Serverless deployment configuration
+├── api/
+│   └── index.php                   # Serverless runtime entrypoint
 ├── config/
-│   ├── database.php                # Active database connection (supports env vars)
-│   └── database.example.php        # Configuration template for deployment
+│   ├── database.php                # Active database connection (reads env vars)
+│   └── database.example.php        # Configuration reference template
 ├── css/
-│   └── style.css                   # Master Design System (Cosmic + Institutional Portal)
+│   └── style.css                   # Master Design System (Cosmic + Student Portal)
 ├── database/
-│   └── campus_nexus.sql            # Complete database schema and non-sensitive seed data
+│   └── campus_nexus.sql            # Complete database schema and seed data
+├── images/                         # Official logos, favicons, and graphic assets
 ├── includes/
 │   ├── auth_logger.php             # Institutional audit & security logging service
 │   ├── header.php                  # Global dynamic navigation, breadcrumbs & flash alerts
@@ -191,7 +243,7 @@ campus-nexus/Campus-Nexus/
 ├── js/
 │   └── main.js                     # Vanilla mobile drawer toggle, alert dismissal & scroll reveal
 ├── modules/
-│   ├── auth/                       # Institutional SSO portal, dual-identifier login, enrollment
+│   ├── auth/                       # Institutional portal, dual-identifier login, registration
 │   ├── students/                   # Profile view, editing, skills, and interests matrix
 │   ├── projects/                   # Team finder, project creation, join requests & management
 │   ├── skills/                     # Peer skill exchange offers and mentorship requests
@@ -200,63 +252,90 @@ campus-nexus/Campus-Nexus/
 │   └── gamification/               # Badges catalog, idempotent helpers & campus leaderboard
 └── public/
     ├── index.php                   # Animated landing page
-    └── dashboard.php               # High-density student analytics dashboard
+    ├── dashboard.php               # High-density student analytics dashboard
+    └── test-users.php              # Diagnostic test user inspection script
 ```
 
 ---
 
-## ⚙️ Installation & Local Setup
+## ☁️ Cloud Deployment (Render)
 
-### Prerequisites
-- **Web Server:** Apache (via XAMPP, WAMP, Laragon, or native Apache2).
-- **PHP:** Version 8.0 or higher with `mysqli`, `session`, and `mbstring` extensions enabled.
-- **Database:** MySQL 8.0+ or MariaDB 10.4+.
+The project is deployed on **Render** as a Docker Web Service. Follow these instructions to deploy your own instance or replicate the production environment:
 
-### Step-by-Step Installation
+### 1. Database Provisioning
+1. Create a free MySQL database on [TiDB Cloud](https://tidbcloud.com) or [Aiven](https://aiven.io).
+2. Open the SQL editor on your cloud database.
+3. Import [database/campus_nexus.sql](database/campus_nexus.sql) to create all tables and initial badge/skill seeds.
 
-#### 1. Clone or Place Files in Web Root
-If using XAMPP on Windows, copy the repository into your `htdocs` folder:
+### 2. Create Render Web Service
+1. Log in to [Render Dashboard](https://dashboard.render.com).
+2. Click **New +** → **Web Service**.
+3. Connect your GitHub repository (`Campus-Nexus`).
+4. Set the following configuration:
+   - **Name:** `campus-nexus`
+   - **Environment:** `Docker` (Render automatically uses the repository's `Dockerfile`)
+   - **Branch:** `main`
+   - **Region:** Any preferred region (e.g., Singapore, Frankfurt, Oregon)
+   - **Instance Type:** `Free`
+
+### 3. Add Environment Variables on Render
+Under the **Environment Variables** tab of your Render service, add:
+- `DB_HOST` = `<your-cloud-db-host>`
+- `DB_PORT` = `3306` (or `4000` for TiDB)
+- `DB_NAME` = `<your-db-name>`
+- `DB_USER` = `<your-db-user>`
+- `DB_PASS` = `<your-db-password>`
+- `PORT` = `80`
+
+### 4. Deploy
+Click **Create Web Service**. Render will automatically build the container and launch Apache. Your application will be live at:
+```
+https://<your-service-name>.onrender.com
+```
+
+---
+
+## 💻 Local Development & Docker Setup
+
+### Option A: Using Docker (Recommended)
+You can run the identical containerized environment locally with Docker:
+
 ```bash
-# Path example:
-C:\xampp\htdocs\campus-nexus\Campus-Nexus
+# 1. Build the Docker container image
+docker build -t campus-nexus .
+
+# 2. Run the container locally mapping port 80
+docker run -d -p 8080:80 \
+  -e DB_HOST="host.docker.internal" \
+  -e DB_PORT="3306" \
+  -e DB_NAME="campus_nexus" \
+  -e DB_USER="root" \
+  -e DB_PASS="your_local_password" \
+  --name campus-nexus-app campus-nexus
+
+# 3. Access in your browser
+# Open: http://localhost:8080
 ```
 
-#### 2. Import the Database Schema
-1. Open your MySQL management tool (e.g., **phpMyAdmin** at `http://localhost/phpmyadmin`).
-2. Create a new database named `campus_nexus` with collation `utf8mb4_unicode_ci`.
-3. Import the SQL dump located at:
-   ```
-   database/campus_nexus.sql
-   ```
-   *(Or via CLI: `mysql -u root -p campus_nexus < database/campus_nexus.sql`)*
-
-#### 3. Configure Database Credentials
-Open `config/database.php` and verify or set your local MySQL credentials:
-```php
-$host     = getenv("DB_HOST") ?: "localhost";
-$dbname   = getenv("DB_NAME") ?: "campus_nexus";
-$username = getenv("DB_USER") ?: "root";
-$password = getenv("DB_PASS") !== false ? getenv("DB_PASS") : ""; // Set your local root password
-```
-
-#### 4. Launch in Browser
-Navigate to the platform in any web browser:
-```
-http://localhost/campus-nexus/Campus-Nexus/public/index.php
-```
-*(The system automatically calculates its relative `$baseUrl`, so it functions properly whether hosted at the root domain or within nested folders).*
+### Option B: Using XAMPP / WAMP / Native Apache
+1. Clone or copy the project into your local server root (e.g. `C:\xampp\htdocs\campus-nexus\Campus-Nexus`).
+2. Start Apache and MySQL from the XAMPP Control Panel.
+3. Open `http://localhost/phpmyadmin`, create database `campus_nexus`, and import `database/campus_nexus.sql`.
+4. Open `config/database.php` and verify your local credentials.
+5. Open `http://localhost/campus-nexus/Campus-Nexus/public/index.php` in your browser.
 
 ---
 
 ## 🔒 Security Implementation
 
-1. **SQL Injection Defense:** All user-supplied inputs in database queries are parameterized using `mysqli::prepare` and `bind_param`. No concatenated raw SQL strings.
+1. **SQL Injection Defense:** All user inputs in database queries are parameterized using `mysqli::prepare` and `bind_param`. No concatenated raw SQL strings.
 2. **Cross-Site Scripting (XSS) Prevention:** All dynamic variables rendered in HTML are sanitized through `htmlspecialchars($var, ENT_QUOTES, 'UTF-8')`.
 3. **Cross-Site Request Forgery (CSRF) Protection:** State-changing forms generate cryptographically secure tokens (`bin2hex(random_bytes(32))`) validated on submission with timing-attack safe `hash_equals()`.
-4. **Password Hashing:** Passwords are hashed using PHP’s native `password_hash($password, PASSWORD_DEFAULT)` utilizing strong bcrypt algorithms.
-5. **Session Fixation Defense:** Sessions are destroyed and refreshed on logout, with session cookie headers cleared.
+4. **Password Hashing:** Passwords are encrypted using PHP's native `password_hash($password, PASSWORD_DEFAULT)` utilizing strong bcrypt hashing.
+5. **Session Fixation Defense:** Sessions are refreshed upon authentication and destroyed upon logout, clearing session cookies.
 6. **Server-Side Authorization:** Every action verifying project join requests, skill approvals, or idea voting validates ownership on the server side — never trusting client inputs.
 7. **Concurrency-Safe Registrations:** Event seat capacity checks are validated on the server to prevent race conditions from over-booking workshops.
+8. **Institutional Audit Logging:** Authentication events and access records are stored in `auth_logs` for security tracking.
 
 ---
 
@@ -264,55 +343,34 @@ http://localhost/campus-nexus/Campus-Nexus/public/index.php
 
 | Test Case | Steps to Test | Expected Result |
 |---|---|---|
-| **Registration** | Register a new student at `modules/auth/register.php`. | Account created, automatic login, student profile and user points initialized, redirected to dashboard with welcome flash. |
+| **Registration** | Register a new student at `/modules/auth/register.php`. | Account created, automatic login, student profile and user points initialized, redirected to dashboard with welcome flash. |
 | **CSRF Validation** | Submit an edited profile with a manipulated CSRF token. | Submission rejected with error alert: *"Security validation failed"*. |
-| **Skill Profiling** | Add skills with proficiencies at `modules/students/skills.php`. | Skills appear on profile, existing skills update via `ON DUPLICATE KEY UPDATE`. |
+| **Skill Profiling** | Add skills with proficiencies at `/modules/students/skills.php`. | Skills appear on profile, existing skills update via `ON DUPLICATE KEY UPDATE`. |
 | **Team Matching** | Create a project requiring `Python` & `MySQL`. Log in as a student with those skills. | Team Finder displays a calculated 100% compatibility badge. |
-| **Prevent Self-Request** | Attempt to request your own skill exchange at `modules/skills/request.php`. | Blocked with warning: *"You cannot request assistance on your own skill offer."* |
-| **Anti-Double Vote** | Cast a vote on an idea at `modules/ideas/index.php` and attempt to vote again. | Vote registered, button switches to *"Voted ✓"*; second vote rejected by unique DB constraint. |
+| **Prevent Self-Request** | Attempt to request your own skill exchange at `/modules/skills/request.php`. | Blocked with warning: *"You cannot request assistance on your own skill offer."* |
+| **Anti-Double Vote** | Cast a vote on an idea at `/modules/ideas/index.php` and attempt to vote again. | Vote registered, button switches to *"Voted ✓"*; second vote rejected by unique DB constraint. |
 | **Event Capacity** | Attempt registration on an event with 0 remaining seats. | Registration blocked with message: *"Event has reached maximum capacity."* |
-| **Gamification** | Create first project, accept a member, and register for an event. | Badges unlocked in `modules/gamification/badges.php`; points correctly incremented on leaderboard. |
+| **Gamification** | Create first project, accept a member, and register for an event. | Badges unlocked in `/modules/gamification/badges.php`; points correctly incremented on leaderboard. |
 | **Mobile Navigation** | Resize viewport to $< 880\text{px}$ and click hamburger toggle. | Mobile drawer smoothly toggles with proper ARIA attributes, closes on outside click or Escape key. |
 
 ---
 
-## 📦 Git Repository Setup Guide
+## 🔮 Roadmap & Future Enhancements
 
-To push this completed project to your GitHub account:
-
-```bash
-# 1. Navigate to the project root directory
-cd c:\campus-nexus\Campus-Nexus
-
-# 2. Check current git status
-git status
-
-# 3. Stage all verified files
-git add .
-
-# 4. Commit with a descriptive message
-git commit -m "feat: complete Campus Nexus collaboration hub with modern UI, security, and gamification"
-
-# 5. Link to your GitHub repository (replace with your repo URL)
-git remote add origin https://github.com/<your-username>/campus-nexus.git
-
-# 6. Push to main branch
-git branch -M main
-git push -u origin main
-```
+- **Real-Time Instant Messaging:** WebSocket-powered direct messaging client for matched project teammates and mentors.
+- **Automated Notifications:** SMTP/PHPMailer email dispatch queue for event reminders, team approvals, and mentorship responses.
+- **University SSO Integration:** SAML 2.0 / OAuth2 support for Google Workspace for Education and Microsoft Azure AD.
+- **Cloud Attachment Storage:** Direct-to-S3 profile avatar and project portfolio file uploads.
 
 ---
 
-## 🔮 Known Limitations & Future Roadmap
+## 📄 License
 
-To maintain academic and professional honesty, the following items represent intentional design boundaries of the current release and planned future enhancements:
-
-- **Real-Time Communication:** The current release uses an asynchronous request/approval workflow. Future plans include implementing a WebSocket (Ratchet / Socket.io) campus instant messaging client.
-- **Automated Notifications:** Currently uses session flash messages. An SMTP/PHPMailer email dispatch queue for event reminders and request approvals is planned.
-- **SSO Authentication:** Currently uses native email/password authentication. Future integration with university SAML/OAuth2 systems (Google Workspace for Education, Microsoft Azure AD) will streamline campus-wide onboarding.
-- **Resume / Attachment Uploads:** Storage for portfolio PDF attachments via local S3-compatible cloud storage.
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for more information.
 
 ---
 
-## 📄 License & Attribution
-Developed for educational research and student innovation. Built with standard open web technologies (PHP, MySQL, HTML5, CSS3, Vanilla JS). Distributed under the [MIT License](LICENSE).
+<p align="center">
+  <b>Campus Nexus</b> · <i>Innovate. Collaborate. Excel.</i><br>
+  Live at <a href="https://campus-nexus-1dc2.onrender.com">campus-nexus-1dc2.onrender.com</a>
+</p>

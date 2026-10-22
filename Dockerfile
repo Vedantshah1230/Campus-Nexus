@@ -1,5 +1,9 @@
 FROM php:8.2-apache
 
+# Install CA certificates for secure TLS/SSL cloud database connections (TiDB Cloud, etc.)
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
 # Enable Apache rewrite module
 RUN a2enmod rewrite
 
