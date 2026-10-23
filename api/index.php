@@ -71,6 +71,11 @@ $routes = [
     '/modules/students/edit-profile.php'        => 'modules/students/edit-profile.php',
     '/modules/students/skills.php'              => 'modules/students/skills.php',
     '/modules/students/interests.php'           => 'modules/students/interests.php',
+
+    // Institutional Admin Console
+    '/modules/admin'                            => 'modules/admin/dashboard.php',
+    '/modules/admin/index.php'                  => 'modules/admin/dashboard.php',
+    '/modules/admin/dashboard.php'              => 'modules/admin/dashboard.php',
 ];
 
 // ─── 4. Look up the target file ───────────────────────────────────────────────

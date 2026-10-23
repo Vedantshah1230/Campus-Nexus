@@ -12,7 +12,7 @@
  */
 $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
 $host     = $_SERVER['HTTP_HOST'] ?? 'localhost';
-$script   = dirname($_SERVER['SCRIPT_NAME'] ?? '/');
+$script   = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? ''));
 $base     = rtrim($script, '/');
 
 header("Location: {$protocol}://{$host}{$base}/public/index.php");

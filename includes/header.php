@@ -128,6 +128,15 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
                     Profile
                 </a>
 
+                <?php if (($_SESSION["user_role"] ?? '') === 'admin'): ?>
+                    <a class="nav-link <?= $isNavActive('/modules/admin/') ? 'active' : '' ?>"
+                       href="<?= htmlspecialchars($baseUrl) ?>/modules/admin/dashboard.php"
+                       style="color: #f97316; font-weight: 700; display: inline-flex; align-items: center; gap: 5px;">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        Admin
+                    </a>
+                <?php endif; ?>
+
                 <div class="nav-divider" aria-hidden="true"></div>
 
                 <a class="nav-link nav-link-logout"
@@ -233,6 +242,16 @@ unset($_SESSION['flash_success'], $_SESSION['flash_error'], $_SESSION['flash_war
                 </div>
                 <span class="cmd-item-badge">Profile</span>
             </a>
+            <?php if (($_SESSION["user_role"] ?? '') === 'admin'): ?>
+            <a href="<?= htmlspecialchars($baseUrl) ?>/modules/admin/dashboard.php" class="cmd-item">
+                <span class="cmd-item-icon">🛡️</span>
+                <div class="cmd-item-text">
+                    <strong>Institutional Admin Console</strong>
+                    <small>User role management, project moderation, security audit logs</small>
+                </div>
+                <span class="cmd-item-badge" style="background: rgba(249, 115, 22, 0.15); color: #ea580c;">Admin</span>
+            </a>
+            <?php endif; ?>
         </div>
         <div class="cmd-palette-footer">
             <span>Navigation: <kbd>↑</kbd> <kbd>↓</kbd> to navigate, <kbd>↵</kbd> to select, <kbd>ESC</kbd> to close</span>

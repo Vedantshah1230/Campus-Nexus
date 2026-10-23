@@ -109,9 +109,25 @@ if ($registeredCount >= (int) $event["max_participants"]) {
 | Register student (Using ON DUPLICATE KEY UPDATE in case previously cancelled)
 |--------------------------------------------------------------------------
 */
+$timeCol = null;
+$colCheck = $conn->query("SHOW COLUMNS FROM event_registrations LIKE 'created_at'");
+if ($colCheck && $colCheck->num_rows > 0) {
+    $timeCol = 'created_at';
+} else {
+    $colCheck2 = $conn->query("SHOW COLUMNS FROM event_registrations LIKE 'registered_at'");
+    if ($colCheck2 && $colCheck2->num_rows > 0) {
+        $timeCol = 'registered_at';
+    }
+}
+
+$updateClause = "status = 'registered'";
+if ($timeCol) {
+    $updateClause .= ", {$timeCol} = CURRENT_TIMESTAMP";
+}
+
 $sql = "INSERT INTO event_registrations (event_id, user_id, status)
         VALUES (?, ?, 'registered')
-        ON DUPLICATE KEY UPDATE status = 'registered', created_at = CURRENT_TIMESTAMP";
+        ON DUPLICATE KEY UPDATE {$updateClause}";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("ii", $eventId, $userId);
