@@ -3,25 +3,21 @@
 /**
  * Campus Nexus — Database Connection
  *
- * All credentials are read from environment variables.
- * Set these in your Vercel project settings (Settings → Environment Variables):
+ * LOCAL (Laragon):  no env vars needed — uses localhost/root/(empty password)
+ * PRODUCTION (Vercel): set these in Vercel → Settings → Environment Variables:
  *
- *   DB_HOST   — hostname of your remote MySQL server  (required on Vercel)
- *   DB_NAME   — database name                          (required on Vercel)
- *   DB_USER   — MySQL username                         (required on Vercel)
- *   DB_PASS   — MySQL password                         (required on Vercel)
- *   DB_PORT   — MySQL port (default: 3306)             (optional)
- *   DB_SSL_CA — absolute path to CA certificate file   (optional, for SSL)
- *
- * The localhost / root / 123456 fallbacks are intentionally left ONLY for
- * local development; they will never be used in production because the
- * Vercel environment variables take precedence.
+ *   DB_HOST   — remote MySQL hostname    (required)
+ *   DB_NAME   — database name            (required)
+ *   DB_USER   — MySQL username           (required)
+ *   DB_PASS   — MySQL password           (required, can be empty string)
+ *   DB_PORT   — MySQL port               (optional, default 3306)
+ *   DB_SSL_CA — path to CA cert file     (optional, for PlanetScale / Aiven)
  */
 
 $host     = getenv('DB_HOST') ?: 'localhost';
 $dbname   = getenv('DB_NAME') ?: 'campus_nexus';
 $username = getenv('DB_USER') ?: 'root';
-$password = (getenv('DB_PASS') !== false) ? getenv('DB_PASS') : '123456';
+$password = (getenv('DB_PASS') !== false) ? getenv('DB_PASS') : '';
 $port     = getenv('DB_PORT')  ? (int) getenv('DB_PORT')  : 3306;
 $sslCa    = getenv('DB_SSL_CA') ?: null;
 
